@@ -43,10 +43,12 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	log.Println("Received ping request from: ", r.RemoteAddr)
 	w.Write([]byte("pong"))
 }
 
 func dataHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Received data request from: ", r.RemoteAddr)
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -57,5 +59,6 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
+	log.Println("Received data from: ", r.RemoteAddr)
 	w.Write([]byte("Received data: " + string(data)))
 }
