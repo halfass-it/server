@@ -1,5 +1,4 @@
 # server
 
 ````
-finally works
 ````
