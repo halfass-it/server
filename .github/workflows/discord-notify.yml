@@ -22,7 +22,6 @@ jobs:
           AUTHOR="${{ github.actor }}"
           COMMIT_COUNT=$(echo '${{ toJson(github.event.commits) }}' | jq '. | length')
           COMMIT_URL="${{ github.event.compare }}"
-
           MESSAGE="**Repository:** $REPO\n**Branch:** $BRANCH\n**Commits:** $COMMIT_COUNT\n**Author:** $AUTHOR\n\n$COMMITS\n[Compare Changes]($COMMIT_URL)"
         elif [ "${{ github.event_name }}" = "pull_request" ]; then
           REPO="${{ github.repository }}"
