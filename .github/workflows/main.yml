@@ -8,5 +8,5 @@ on:
 
 jobs:
   discord-updates:
-    uses: halfass-it/.github/workflows/discord-updates.yml@main
+    uses: ./.github/workflows/discord-updates.yml
 
