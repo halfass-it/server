@@ -9,6 +9,4 @@ on:
 jobs:
   discord-updates:
     uses: ./.github/workflows/discord-updates.yml
-    with:
-      discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
