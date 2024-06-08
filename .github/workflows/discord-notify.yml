@@ -18,11 +18,11 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" = "push" ]; then
           REPO="${{ github.repository }}"
-          BRANCH="${{ github.ref_name }}"
+          BRANCH=$(echo "${{ github.ref }}" | sed 's/refs\/heads\///')
           AUTHOR="${{ github.actor }}"
-          COMMIT_COUNT=$(echo "${{ github.event.commits }}" | jq '. | length')
+          COMMIT_COUNT=$(echo "${{ toJson(github.event.commits) }}" | jq '. | length')
           COMMIT_URL="${{ github.event.compare }}"
-          COMMITS=$(echo "${{ github.event.commits }}" | jq -r '.[] | "Commit: \(.message) by \(.author.name) [View Commit](\(.url))"')
+          COMMITS=$(echo "${{ toJson(github.event.commits) }}" | jq -r '.[] | "Commit: \(.message) by \(.author.name) [View Commit](\(.url))"')
 
           MESSAGE="**Repository:** $REPO\n**Branch:** $BRANCH\n**Commits:** $COMMIT_COUNT\n**Author:** $AUTHOR\n\n$COMMITS\n[Compare Changes]($COMMIT_URL)"
         elif [ "${{ github.event_name }}" = "pull_request" ]; then
