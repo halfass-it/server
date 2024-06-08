@@ -1,0 +1,16 @@
+name: Discord Dev Logs
+
+on:
+  workflow_call:
+
+jobs:
+  discord-devlogs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'Repository: ${{ github.repository }} - Event: ${{ github.event_name }} - Commit: ${{ github.sha }}'
+
