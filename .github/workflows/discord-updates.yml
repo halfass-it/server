@@ -2,6 +2,10 @@ name: Discord Updates
 
 on:
   workflow_call:
+    inputs:
+      discord_webhook_url:
+        required: true
+        type: string
 
 jobs:
   discord-notification:
@@ -9,7 +13,7 @@ jobs:
     steps:
       - name: Send Discord Notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK: ${{ inputs.discord_webhook_url }}
         uses: Ilshidur/action-discord@master
         with:
           args: 'Repository: ${{ github.repository }} - Event: ${{ github.event_name }} - Commit: ${{ github.sha }}'
