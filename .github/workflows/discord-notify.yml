@@ -21,7 +21,7 @@ jobs:
           BRANCH=$(echo "${{ github.ref }}" | sed 's/refs\/heads\///')
           AUTHOR="${{ github.actor }}"
           COMMIT_URL="${{ github.event.compare }}"
-          MESSAGE="**Repository:** $REPO\n**Branch:** $BRANCH\n**Commits:** $COMMIT_COUNT\n**Author:** $AUTHOR\n\n$COMMITS\n[Compare Changes]($COMMIT_URL)"
+          MESSAGE="**Repository:** $REPO\n**Branch:** $BRANCH\n**Commits:** $COMMIT_COUNT\n**Author:** $AUTHOR\n[Compare Changes]($COMMIT_URL)"
         elif [ "${{ github.event_name }}" = "pull_request" ]; then
           REPO="${{ github.repository }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
