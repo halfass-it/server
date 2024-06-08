@@ -7,12 +7,6 @@ on:
     branches: [main]
 
 jobs:
-  main:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run Main Job
-        run: echo "Running main job..."
-      - name: Send Discord Dev Logs
-        uses: ./.github/workflows/discord-devlogs.yml
+  discord-updates:
+    uses: halfass-it/.github/workflows/discord-updates.yml@main
 
