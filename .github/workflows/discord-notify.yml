@@ -18,7 +18,7 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" = "push" ]; then
           REPO="${{ github.repository }}"
-          BRANCH="${{ github.ref_name }}"
+          BRANCH="${{ github.ref }}" # Updated to ref instead of ref_name
           AUTHOR="${{ github.actor }}"
           COMMIT_COUNT=$(echo "${{ github.event.commits }}" | jq '. | length')
           COMMIT_URL="${{ github.event.compare }}"
