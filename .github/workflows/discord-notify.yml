@@ -28,7 +28,7 @@ jobs:
           PR_URL="${{ github.event.pull_request.html_url }}"
           ACTION="${{ github.event.action }}"
           AUTHOR="${{ github.actor }}"
-          MESSAGE="**Repository:** $REPO\n**Pull Request:** [$PR_TITLE]($PR_URL)\n**Action:** $ACTION\n**Author:** $AUTHOR"
+          MESSAGE="\n\n**Repository:** $REPO\n**Pull Request:** [$PR_TITLE]($PR_URL)\n**Action:** $ACTION\n**Author:** $AUTHOR"
         fi
 
         curl -H "Content-Type: application/json" \
