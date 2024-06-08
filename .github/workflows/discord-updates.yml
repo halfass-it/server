@@ -8,9 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           args: 'Repository: ${{ github.repository }} - Event: ${{ github.event_name }} - Commit: ${{ github.sha }}'
 
