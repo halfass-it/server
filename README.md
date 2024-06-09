@@ -1,5 +1,9 @@
 # server
 
 ````
-https://huggingface.co/state-spaces/mamba-370m-hf/tree/main
+[ ] connect to godot project
+[ ] read and write to godot project
+[ ] struct project
+[ ] refactor
+[ ] check perf and improves to go/zig/cg
 ````
