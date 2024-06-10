@@ -12,5 +12,5 @@ if [ -d $VENV ]; then
 fi
 $PYTHON -m venv $VENV
 $PIP install --upgrade pip
-$PIP install wheel setuptools poetry ruff
+$PIP install wheel setuptools poetry python-dotenv ruff
 $POETRY install
