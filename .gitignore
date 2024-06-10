@@ -1,3 +1,4 @@
+client/
 server
 server.log
 __pycache__/
