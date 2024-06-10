@@ -1,58 +1,43 @@
-import socket
-from dataclasses import dataclass
+import sys
 
-IP: str = '127.0.0.1'
-PORT: int = 4242
-BUFFER: int = 1024
+from twisted.python import log
+from twisted.internet import reactor, task
+from autobahn.twisted.websocket import WebSocketServerFactory
 
-
-@dataclass
-class Logger:
-  def log(self, data):
-    print(data)
+from server.protocol import ServerProtocol
 
 
-@dataclass
-class Client:
-  def __post_init__(self):
-    self.logger = Logger()
-    try:
-      self.conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    except socket.error as e:
-      self.logger.log(f'Error creating socket: {e}')
-      exit(1)
+class GameFactory(WebSocketServerFactory):
+  def __init__(self, hostname: str, port: int):
+    self.protocol = ServerProtocol
+    super().__init__(f'ws://{hostname}:{port}')
 
-  def send(self, data: str) -> int:
-    try:
-      self.conn.sendto(data.encode(), (IP, PORT))
-      self.conn.settimeout(1)
-    except socket.timeout:
-      self.logger.log(f"Timeout sending: '{data}' to {IP}:{PORT}")
-      return 1
-    self.logger.log(f"Sent: '{data}' to {IP}:{PORT}")
-    return 0
+    self.clients: set[ServerProtocol] = set()
 
-  def recv(self) -> str:
-    try:
-      data, (recv_ip, recv_port) = self.conn.recvfrom(BUFFER)
-      data = data.decode()
-      self.logger.log(f"Received: '{data}' from {recv_ip}:{recv_port}")
-    except socket.timeout:
-      self.logger.log(f'Timeout receiving from {IP}:{PORT}')
-      return ''
-    return data if data else ''
+    tickloop = task.LoopingCall(self.tick)
+    tickloop.start(1 / 20)  # 20 times per second
 
+  def tick(self):
+    for p in self.clients:
+      p.tick()
 
-def test_client():
-  client = Client()
-  client.send('ping')
-  assert client.recv() == 'pong'
-  client.send('Success!')
-  assert client.recv() == 'invalid'
+  def buildProtocol(self, addr):
+    p = super().buildProtocol(addr)
+    self.clients.add(p)
+    return p
 
 
 def main():
-  test_client()
+  log.startLogging(sys.stdout)
+
+  HOSTNAME: str = '127.0.0.1'
+  PORT: int = 8080
+
+  factory = GameFactory(HOSTNAME, PORT)
+
+  reactor.listenTCP(PORT, factory)
+  reactor.run()
+
 
 if __name__ == '__main__':
   main()
