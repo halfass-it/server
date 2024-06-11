@@ -1,13 +1,22 @@
+import sys
+
 from jsonargparse import CLI
 
 from server.client import Client
 
 
 class Main:
+  def __init__(self, ip: str, port: str, buffer_size: str, timeout: str) -> None:
+    self.ip: str = ip
+    self.port: int = int(port)
+    self.buffer_size: int = int(buffer_size)
+    self.timeout: int = int(timeout)
+
   def run(self):
-    client = Client(ip='127.0.0.1', port=2001, buffer_size=1024, timeout=60)
+    client = Client(self.ip, self.port, self.buffer_size, self.timeout)
     client.listen()
     client.close()
+
 
 def main():
   try:
@@ -21,4 +30,4 @@ def main():
 
 if __name__ == '__main__':
   main()
-  exit(main())
+  sys.exit(main())
