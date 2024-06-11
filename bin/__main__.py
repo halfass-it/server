@@ -1,17 +1,24 @@
+from jsonargparse import CLI
+
 from server.client import Client
 
-def test_client():
-  client = Client()
-  client.send('ping')
-  assert client.recv() == 'pong'
-  client.send('Success!')
-  assert client.recv() == 'invalid'
 
+class Main:
+  def run(self):
+    client = Client(ip='127.0.0.1', port=2001, buffer_size=1024, timeout=60)
+    client.listen()
+    client.close()
 
 def main():
-  test_client()
+  try:
+    CLI(Main)
+    return 0
+  except KeyboardInterrupt:
+    return 0
+  except ValueError:
+    return 0
 
 
 if __name__ == '__main__':
   main()
-  exit(0)
+  exit(main())
