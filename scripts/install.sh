@@ -1,10 +1,10 @@
 #!/bin/sh
 
 CACHE="$XDG_CACHE_HOME/halfass-it"
-VENV=$CACHE/.venv
+VENV="$CACHE/.venv"
 PYTHON="/usr/bin/python3.12"
-PIP=$VENV/bin/pip
-POETRY=$VENV/bin/poetry
+PIP="$VENV/bin/pip"
+POETRY="$VENV/bin/poetry"
 
 mkdir -p $CACHE
 if [ -d $VENV ]; then

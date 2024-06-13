@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CACHE=~/.cache
-VENV=$CACHE/.venv
-POETRY=$VENV/bin/poetry
-$POETRY remove $1
+CACHE="$XDG_CACHE_HOME/halfass-it"
+VENV="$CACHE/.venv"
+POETRY="$VENV/bin/poetry"
+$POETRY remove "$1"
