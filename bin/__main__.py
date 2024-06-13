@@ -1,4 +1,5 @@
 import sys
+import asyncio
 
 from jsonargparse import CLI
 
@@ -15,8 +16,7 @@ class Main:
 
   def run(self):
     client = Client(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir)
-    client.listen()
-    client.close()
+    asyncio.run(client.start_server())
 
 
 def main():
