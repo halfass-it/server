@@ -3,7 +3,7 @@ import asyncio
 
 from jsonargparse import CLI
 
-from server.client import Client
+from server.server import Server
 
 
 class Main:
@@ -15,8 +15,8 @@ class Main:
     self.cache_dir: str = cache_dir
 
   def run(self):
-    client = Client(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir)
-    asyncio.run(client.start_server())
+    server = Server(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir)
+    asyncio.run(server.start())
 
 
 def main():

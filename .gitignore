@@ -1,5 +1,4 @@
 client/
-server
 server.log
 __pycache__/
 *.pyc
