@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name your_domain.com;
+    server_name localhost;
 
     location / {
         return 301 https://$host$request_uri;
@@ -8,11 +8,12 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
-    server_name your_domain.com;
+    listen 443 ssl;
+    http2 on;
+    server_name localhost;
 
-    ssl_certificate /etc/letsencrypt/live/your_domain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/your_domain.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/localhost/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/localhost/privkey.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
     ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
@@ -27,52 +28,35 @@ server {
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
 
-    location /r1 {
+    location /r0 {
         proxy_pass http://localhost:1337;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /r2 {
+    location /r1 {
         proxy_pass http://localhost:1338;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /r3 {
+    location /r2 {
         proxy_pass http://localhost:1339;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /r4 {
+    location /r3 {
         proxy_pass http://localhost:1340;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
-
