@@ -6,10 +6,10 @@ PYTHON=$VENV/bin/python
 
 case "$1" in
     server)
-        $PYTHON ./test/fuzz_server.py
+        $PYTHON ./fuzz/fuzz_server.py
         ;;
     router)
-        $PYTHON ./test/fuzz_router.py
+        $PYTHON ./fuzz/fuzz_router.py
         ;;
     *)
         echo "Usage: $0 {server|router}"
