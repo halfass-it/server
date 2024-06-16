@@ -31,7 +31,7 @@ class Server:
 
   async def handle_client(self, reader, writer):
     client_ip, client_port = writer.get_extra_info('peername')
-    self.logger.info(f'[OPENED] Connected to client at {client_ip}:{client_port}')
+    self.logger.info(f'[OPENED] Connected to client from {client_ip}:{client_port} at {self.ip}:{self.port}')
 
     try:
       while True:
