@@ -36,21 +36,17 @@ case "$1" in
         ;;
     router)
         run_main "127.0.0.1" "1337" "1024" "60" "$LOGS_DIR" &>/dev/null &
+        sleep 1
         run_main "127.0.0.1" "1338" "1024" "60" "$LOGS_DIR" &>/dev/null &
+        sleep 1
         run_main "127.0.0.1" "1339" "1024" "60" "$LOGS_DIR" &>/dev/null &
+        sleep 1
         run_main "127.0.0.1" "1340" "1024" "60" "$LOGS_DIR" &>/dev/null &
 
-        # Copy Nginx configuration
-        sudo cp ./build/nginx.conf "$NGINX_CONFIG_DIR/nginx.conf"
-        sudo cp ./build/default.conf "$NGINX_SITE_DIR/default.conf"
-
-        # Enable the default site
+        sudo cp ./router/nginx.conf "$NGINX_CONFIG_DIR/nginx.conf"
+        sudo cp ./router/default.conf "$NGINX_SITE_DIR/default.conf"
         sudo ln -sf "$NGINX_SITE_DIR/default.conf" "$NGINX_SITE_ENABLED_DIR/default.conf"
-
-        # Restart Nginx
-        sudo systemctl enable nginx
-        sudo systemctl start nginx
-        sudo systemctl restart nginx
+        sudo systemctl start nginx || sudo systemctl restart nginx
         ;;
     *)
         echo "Usage: $0 {server|router}"
