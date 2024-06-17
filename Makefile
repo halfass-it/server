@@ -1,7 +1,7 @@
 SCRIPTS_DIR := ./scripts
 SCRIPTS := $(wildcard $(SCRIPTS_DIR)/*.sh)
 SCRIPT_NAMES := $(notdir $(basename $(SCRIPTS)))
-SCRIPTS_WITH_ARG := run fuzz add remove todo
+SCRIPTS_WITH_ARG := run fuzz add remove
 
 .PHONY: default
 default:
