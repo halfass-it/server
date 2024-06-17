@@ -1,9 +1,0 @@
-2024/06/17 17:33:01 [ReadAllowedMacAddresses]::Warning: Opening file: open /opt/brewTV/allowed_mac_addresses.txt: no such file or directory
-2024/06/17 17:33:01 [LoadConfig]::Error loading allowed MAC address list: open /opt/brewTV/allowed_mac_addresses.txt: no such file or directory
-2024/06/17 17:33:01 List of allowed MAC addresses:
-2024/06/17 17:33:01 [RunServer]::Running server: 192.168.0.38:80
-2024/06/17 17:33:01 [RunServer]::Error starting server: listen tcp 192.168.0.38:80: bind: permission denied
-2024/06/17 17:33:04 [ReadAllowedMacAddresses]::Warning: Opening file: open /opt/brewTV/allowed_mac_addresses.txt: no such file or directory
-2024/06/17 17:33:04 [LoadConfig]::Error loading allowed MAC address list: open /opt/brewTV/allowed_mac_addresses.txt: no such file or directory
-2024/06/17 17:33:04 List of allowed MAC addresses:
-2024/06/17 17:33:04 [RunServer]::Running server: 192.168.0.38:80
