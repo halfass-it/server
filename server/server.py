@@ -46,7 +46,7 @@ class Server:
       # Decode bytes to string and split headers from body
       decoded_data = data.decode('utf-8')
       headers, json_data = decoded_data.split('\r\n\r\n', 1)
-      self.logger.debug(f'[DEBUG] HTTP Headers: {headers}') 
+      self.logger.debug(f'[DEBUG] HTTP Headers: {headers}')
       json_obj = json.loads(json_data)
       if 'data' not in json_obj:
         raise ValueError("[ERROR] JSON does not contain 'data' field")
