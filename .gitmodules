@@ -7,3 +7,6 @@
 [submodule "bot"]
     path = bot
     url = https://github.com/halfass-it/bot
+[submodule "utils"]
+    path = utils
+    url = https://github.com/halfass-it/utils
