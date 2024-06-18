@@ -88,20 +88,20 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "jsonargparse"
-version = "4.29.0"
+version = "4.30.0"
 description = "Implement minimal boilerplate CLIs derived from type hints and parse from command line, config files and environment variables."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "jsonargparse-4.29.0-py3-none-any.whl", hash = "sha256:e093d9509996b031d156fe8d4a087e2d91adbfc654b9e2c783878d45ad0dfefe"},
-    {file = "jsonargparse-4.29.0.tar.gz", hash = "sha256:03d407122c856095c48b07c58107002c9d3eaeb2795d8040efad831db5817494"},
+    {file = "jsonargparse-4.30.0-py3-none-any.whl", hash = "sha256:1856c76c32bc1c94d323916ec75bb3cec49bbc2072a4e2fe9fe9ba6a7ec2343f"},
+    {file = "jsonargparse-4.30.0.tar.gz", hash = "sha256:de3502c5852546c57b9d3dac6fd2a28fe312bc70df3ea877d2435944eebeea46"},
 ]
 
 [package.dependencies]
 PyYAML = ">=3.13"
 
 [package.extras]
-all = ["jsonargparse[argcomplete]", "jsonargparse[fsspec]", "jsonargparse[jsonnet]", "jsonargparse[jsonschema]", "jsonargparse[omegaconf]", "jsonargparse[reconplogger]", "jsonargparse[ruyaml]", "jsonargparse[signatures]", "jsonargparse[typing-extensions]", "jsonargparse[urls]"]
+all = ["jsonargparse[fsspec]", "jsonargparse[jsonnet]", "jsonargparse[jsonschema]", "jsonargparse[omegaconf]", "jsonargparse[reconplogger]", "jsonargparse[ruyaml]", "jsonargparse[signatures]", "jsonargparse[typing-extensions]", "jsonargparse[urls]"]
 argcomplete = ["argcomplete (>=2.0.0)", "argcomplete (>=3.3.0)"]
 coverage = ["jsonargparse[test-no-urls]", "pytest-cov (>=4.0.0)"]
 dev = ["build (>=0.10.0)", "jsonargparse[coverage]", "jsonargparse[doc]", "jsonargparse[mypy]", "jsonargparse[test]", "pre-commit (>=2.19.0)", "tox (>=3.25.0)"]
@@ -113,8 +113,9 @@ maintainer = ["bump2version (>=0.5.11)", "twine (>=4.0.2)"]
 omegaconf = ["omegaconf (>=2.1.1)"]
 reconplogger = ["reconplogger (>=4.4.0)"]
 ruyaml = ["ruyaml (>=0.20.0)"]
+shtab = ["shtab (>=1.7.1)"]
 signatures = ["docstring-parser (>=0.15)", "jsonargparse[typing-extensions]", "typeshed-client (>=2.1.0)"]
-test = ["attrs (>=22.2.0)", "jsonargparse[test-no-urls]", "pydantic (>=2.3.0)", "responses (>=0.12.0)", "types-PyYAML (>=6.0.11)", "types-requests (>=2.28.9)"]
+test = ["attrs (>=22.2.0)", "jsonargparse[argcomplete]", "jsonargparse[shtab]", "jsonargparse[test-no-urls]", "pydantic (>=2.3.0)", "responses (>=0.12.0)", "types-PyYAML (>=6.0.11)", "types-requests (>=2.28.9)"]
 test-no-urls = ["pytest (>=6.2.5)", "pytest-subtests (>=0.8.0)"]
 typing-extensions = ["typing-extensions (>=3.10.0.0)"]
 urls = ["requests (>=2.18.4)"]
@@ -314,6 +315,24 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "pygments
 testing = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "importlib-metadata", "ini2toml[lite] (>=0.14)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "mypy (==1.9)", "packaging (>=23.2)", "pip (>=19.1)", "pyproject-hooks (!=1.1)", "pytest (>=6,!=8.1.1)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-home (>=0.5)", "pytest-mypy", "pytest-perf", "pytest-ruff (>=0.2.1)", "pytest-subprocess", "pytest-timeout", "pytest-xdist (>=3)", "tomli", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "utils"
+version = "1.0.2"
+description = ""
+optional = false
+python-versions = ">=3.6, <4.0"
+files = []
+develop = false
+
+[package.dependencies]
+loguru = "*"
+
+[package.source]
+type = "git"
+url = "https://github.com/halfass-it/utils.git"
+reference = "HEAD"
+resolved_reference = "8941d20298749533d78615ed8f08a814c18c5f5a"
+
+[[package]]
 name = "werkzeug"
 version = "3.0.3"
 description = "The comprehensive WSGI web application library."
@@ -361,4 +380,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "44bb623cd0465f353259f38eda29915a314de85c3afe7d3df72675aba4e6406c"
+content-hash = "dd480814755b8cf30777d198e3eeac67f0413dd47f2f2310763c5d1a39266810"

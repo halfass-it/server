@@ -15,6 +15,7 @@ flask = "^3.0.3"
 python-dotenv = "^1.0.1"
 jsonargparse = "^4.29.0"
 pylogger = {git = "https://github.com/rodfer0x80/pylogger.git"}
+utils = {git = "https://github.com/halfass-it/utils.git"}
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
