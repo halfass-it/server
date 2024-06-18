@@ -4,3 +4,6 @@
 [submodule "gameplay_server"]
     path = gameplay_server
     url = https://github.com/halfass-it/gameplay_server
+[submodule "bot"]
+    path = bot
+    url = https://github.com/halfass-it/bot

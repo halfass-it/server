@@ -14,7 +14,7 @@ class Server:
     self.buffer_size: int = buffer_size
     self.timeout: int = timeout
     name: str = str(__name__.split('.')[-1])
-    logs_dir: Path = Path(str(CacheDir())) / 'logs' if not cache_dir else cache_dir
+    logs_dir: Path = Path(str(CacheDir())) / 'logs' if not cache_dir else cache_dir / 'logs'
     self.logger: Logger = Logger(name=name, logs_dir=logs_dir)()
 
   async def handle_client(self, reader, writer):
