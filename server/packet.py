@@ -1,48 +1,64 @@
-import json
+from dataclasses import dataclass, field
 
-from server.commands import Commands
+from server.types import AuthPacketStructure, GameplayPacketStructure, CommandPacketStruct
 
-
+@dataclass
 class Packet:
-  def __init__(self, type: str) -> None:
-    self.type = type
+  category: str = field(init=False)
 
   def __str__(self) -> str:
     return ''
 
   def __repr__(self) -> str:
-    return f'{self.type}()'
+    return f'{self.category}()'
+  
+@dataclass
+class AuthPacket(Packet):
+  category: str = field(init=False, default='AuthPacket')
+  data: AuthPacketStructure
 
-
-class DataPacket(Packet):
-  def __init__(self, data: dict):
-    super().__init__('DataPacket')
-    self.data = data
+  def __post_init__(self):
+        super().__post_init__()
 
   def __str__(self) -> str:
     return self.data
 
   def __bytes__(self) -> bytes:
-    return self.data.encode('utf-8')
+        return str(self.data).encode('utf-8')
 
   def __repr__(self) -> str:
-    return f'{self.type}({json.dumps(self.data)})'
+      return f'{self.category}({self.data})'
 
+@dataclass
+class GameplayPacket(Packet):
+  category: str = field(init=False, default='GameplayPacket')
+  data: GameplayPacketStructure
 
-class CommandPacket(Packet):
-  def __init__(self, in_data) -> None:
-    super().__init__('CommandPacket')
-    self.in_data = in_data
-    self.out_data = ''
-
-  def process(self):
-    self.out_data = Commands.process(self.in_data)
+  def __post_init__(self):
+        super().__post_init__()
 
   def __str__(self) -> str:
-    return json.dump(self.out_data)
+    return self.data
 
   def __bytes__(self) -> bytes:
-    return self.data.encode('utf-8')
+        return str(self.data).encode('utf-8')
 
   def __repr__(self) -> str:
-    return f'{self.type}({json.dumps(self.out_data)}))'
+      return f'{self.category}({self.data})'
+  
+@dataclass
+class CommandPacket(Packet):
+  category: str = field(init=False, default='CommandPacket')
+  data: CommandPacketStruct
+
+  def __post_init__(self):
+        super().__post_init__()
+
+  def __str__(self) -> str:
+    return self.data
+
+  def __bytes__(self) -> bytes:
+        return str(self.data).encode('utf-8')
+
+  def __repr__(self) -> str:
+      return f'{self.category}({self.data})'
