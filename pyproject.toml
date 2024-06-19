@@ -16,6 +16,7 @@ python-dotenv = "^1.0.1"
 jsonargparse = "^4.29.0"
 pylogger = {git = "https://github.com/rodfer0x80/pylogger.git"}
 utils = {git = "https://github.com/halfass-it/utils.git"}
+python-memcached = "^1.62"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

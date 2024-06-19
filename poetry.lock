@@ -240,6 +240,17 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "python-memcached"
+version = "1.62"
+description = "Pure python memcached client"
+optional = false
+python-versions = "*"
+files = [
+    {file = "python-memcached-1.62.tar.gz", hash = "sha256:0285470599b7f593fbf3bec084daa1f483221e68c1db2cf1d846a9f7c2655103"},
+    {file = "python_memcached-1.62-py2.py3-none-any.whl", hash = "sha256:1bdd8d2393ff53e80cd5e9442d750e658e0b35c3eebb3211af137303e3b729d1"},
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.1"
 description = "YAML parser and emitter for Python"
@@ -316,7 +327,7 @@ testing = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "importlib-metad
 
 [[package]]
 name = "utils"
-version = "1.0.2"
+version = "1.0.4"
 description = ""
 optional = false
 python-versions = ">=3.6, <4.0"
@@ -330,7 +341,7 @@ loguru = "*"
 type = "git"
 url = "https://github.com/halfass-it/utils.git"
 reference = "HEAD"
-resolved_reference = "9b42026dfcc5e2076d2e14eb096ebc502775fddb"
+resolved_reference = "f5a9af0178c97bb204dd5677dbffb9efb6406b4b"
 
 [[package]]
 name = "werkzeug"
@@ -380,4 +391,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "dd480814755b8cf30777d198e3eeac67f0413dd47f2f2310763c5d1a39266810"
+content-hash = "8918706c509512229dde1e2ecf4562569cdba479d0e69a5ff8fc8489fbc10b3f"

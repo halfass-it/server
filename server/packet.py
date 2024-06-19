@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from server.types import AuthPacketStructure, GameplayPacketStructure, CommandPacketStruct
+from server.types import AuthPacketStructure, GamePacketStructure, CommandPacketStruct
 
 
 @dataclass
@@ -19,9 +19,6 @@ class AuthPacket(Packet):
   category: str = field(init=False, default='AuthPacket')
   data: AuthPacketStructure
 
-  def __post_init__(self):
-    super().__post_init__()
-
   def __str__(self) -> str:
     return self.data
 
@@ -33,12 +30,9 @@ class AuthPacket(Packet):
 
 
 @dataclass
-class GameplayPacket(Packet):
-  category: str = field(init=False, default='GameplayPacket')
-  data: GameplayPacketStructure
-
-  def __post_init__(self):
-    super().__post_init__()
+class GamePacket(Packet):
+  category: str = field(init=False, default='GamePacket')
+  data: GamePacketStructure
 
   def __str__(self) -> str:
     return self.data
@@ -56,13 +50,14 @@ class CommandPacket(Packet):
   data: CommandPacketStruct
 
   def __post_init__(self):
-    super().__post_init__()
+    self.auth_data = self.data.get('auth', {})
+    self.game_data = self.data.get('game', {})
 
   def __str__(self) -> str:
-    return self.data
+    return f'auth: {self.auth_data}, game: {self.game_data}'
 
   def __bytes__(self) -> bytes:
     return str(self.data).encode('utf-8')
 
   def __repr__(self) -> str:
-    return f'{self.category}({self.data})'
+    return f'{self.category}(auth={self.auth_repr}, game={self.game_repr})'

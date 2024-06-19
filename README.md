@@ -17,17 +17,6 @@ For horizontal scaling in Python, you can use a process manager like Supervisor 
 With Supervisor, you can create a configuration file to manage multiple processes and set autoscaling rules based on system metrics.
 For Kubernetes, you can define your Python server as a Deployment resource and use the replicas field to specify the number of instances. Kubernetes will automatically manage the desired state and scale instances as needed.
 
-[ ] Caching Layer with Memcached:
-You can use the Python python-memcached library to interact with Memcached from your Python application. Here's an example of setting and getting a value in Memcached:
-import memcache
-> Connect to Memcached
-mc = memcache.Client(['127.0.0.1:11211'])
-> Set a value
-mc.set('key', 'value')
-> Get a value
-value = mc.get('key')
-/utils
-
 [ ] Monitoring with a Free Local Software:
 For monitoring, you can use a tool like Glances, which is a cross-platform system monitoring tool written in Python. It provides real-time system information and can be run locally on your servers.
 /bot
@@ -61,4 +50,13 @@ server {
 /router
 
 
+````
+
+
+````
+=> Requirements
+> python>=3.12
+> python-venv
+> nginx
+> memcached
 ````

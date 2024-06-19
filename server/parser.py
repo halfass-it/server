@@ -14,22 +14,21 @@ class Parser:
   def input(self, data: bytes) -> CommandPacket:
     try:
       headers, json_data = data.decode('utf-8').split('\r\n\r\n', 1)
-      self.logger.debug(f'[DEBUG] HTTP Headers: {headers}')
+      self.logger.debug(f'[DEBUG] HTTP Headers: {", ".join(headers.splitlines())}')
       json_obj = json.loads(json_data)
       self.logger.debug(f'[DEBUG] JSON Data: {json_obj}')
       return CommandPacket(json_obj)
-    
+
     except (json.JSONDecodeError, ValueError) as e:
-      self.logger.error(f'[ERROR] Invalid JSON received: {e}')
-      return CommandPacket({'auth': {}, 'gameplay': {}})
+      self.logger.error(f'[ERROR] Invalid JSON input: {e}')
+      return None
     except Exception as e:
-      self.logger.error(f'[ERROR] Unexpected error: {e}')
-      return CommandPacket({'auth': {}, 'gameplay': {}})
+      self.logger.error(f'[ERROR] Parsing error in input: {e}')
+      return None
 
   def output(self, packet: CommandPacket) -> bytes:
     try:
-      ServerGateway.evaluate(packet)
+      return ServerGateway.evaluate(packet)
     except Exception as e:
-      self.logger.error(f'[ERROR] Unexpected error: {e}')
+      self.logger.error(f'[ERROR] Parsing error in output: {e}')
       return ''.encode('utf-8')
-    return json.dumps({'data': packet.data}).encode('utf-8')
