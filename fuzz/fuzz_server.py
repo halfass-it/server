@@ -5,16 +5,24 @@ import json
 import time
 import statistics
 
+PACKET = {
+  'auth': {
+    'token': '$TOKEN',
+    'username': '$USERNAME'
+  }, 
+  'gameplay': {
+    'action': '$ACTION',
+    'data': '$DATA'
+  }
+}
 
 def fuzz():
-  data = {'data': {'auth': True, 'command': 'ping'}}
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   server_address = ('localhost', 1337)
   sock.connect(server_address)
   print(f'[+] {server_address}')
   try:
-    data = {'data': {'auth': True, 'command': 'ping'}}
-    message = json.dumps(data)
+    message = json.dumps(PACKET)
     request = f'POST / HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: {len(message)}\r\n\r\n{message}'
     print(f'[>] {request}')
     sock.sendall(request.encode())
@@ -49,5 +57,5 @@ def monitor_fuzzer(number_requests):
 
 
 if __name__ == '__main__':
-  number_requests = 64
+  number_requests = 1
   monitor_fuzzer(number_requests)

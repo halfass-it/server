@@ -7,8 +7,18 @@ import time
 import statistics
 
 
+PACKET = {
+  'auth': {
+    'token': '$TOKEN',
+    'username': '$USERNAME'
+  }, 
+  'gameplay': {
+    'action': '$ACTION',
+    'data': '$DATA'
+  }
+}
+
 def fuzz():
-  data = {'data': {'auth': True, 'command': 'ping'}}
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   context = ssl.create_default_context()
   context.check_hostname = False
@@ -18,8 +28,7 @@ def fuzz():
   print(f'[+] {server_address}')
   wrapped_sock.connect(server_address)
   try:
-    data = {'data': {'auth': True, 'command': 'ping'}}
-    message = json.dumps(data)
+    message = json.dumps(PACKET)
     request = f'POST / HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: {len(message)}\r\n\r\n{message}'
     print(f'[>] {request}')
     wrapped_sock.sendall(request.encode())
