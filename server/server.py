@@ -20,6 +20,7 @@ class Server:
   def _build_logger(self, cache_dir: Path = None) -> Logger:
     name: str = str(__name__.split('.')[-1])
     logs_dir: Path = Path(str(CacheDir())) / 'logs' if not cache_dir else Path(cache_dir) / 'logs'
+    logs_dir.mkdir(parents=True, exist_ok=True)
     return Logger(name=name, logs_dir=logs_dir)()
 
   def _build_parser(self, logger: Logger, cache_dir: Path = None) -> Parser:
