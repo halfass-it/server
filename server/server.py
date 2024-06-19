@@ -16,9 +16,9 @@ class Server:
     self.buffer_size: int = buffer_size
     self.timeout: int = timeout
     self.cache_dir: Path = CacheDir() if not cache_dir else cache_dir
-    self.mc = memcache.Client(['127.0.0.1:11211']) 
+    self.mc = memcache.Client(['127.0.0.1:11211'])
     # self.mc.set('key', 'value') | value = self.mc.get('key')
-    #TODO: add memcache to store data properly
+    # TODO: add memcache to store data properly
     self.logger = LoggerToFile(cache_dir=self.cache_dir)
     self.parser = Parser(logger=self.logger, cache_dir=self.cache_dir)
 

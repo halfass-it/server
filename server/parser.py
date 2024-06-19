@@ -18,7 +18,7 @@ class Parser:
       json_obj = json.loads(json_data)
       self.logger.debug(f'[DEBUG] JSON Data: {json_obj}')
       return CommandPacket(json_obj)
-    
+
     except (json.JSONDecodeError, ValueError) as e:
       self.logger.error(f'[ERROR] Invalid JSON input: {e}')
       return None

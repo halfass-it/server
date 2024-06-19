@@ -5,16 +5,8 @@ import json
 import time
 import statistics
 
-PACKET = {
-  'auth': {
-    'token': '$TOKEN',
-    'username': '$USERNAME'
-  }, 
-  'gameplay': {
-    'action': '$ACTION',
-    'data': '$DATA'
-  }
-}
+PACKET = {'auth': {'token': '$TOKEN', 'username': '$USERNAME'}, 'gameplay': {'action': '$ACTION', 'data': '$DATA'}}
+
 
 def fuzz():
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
