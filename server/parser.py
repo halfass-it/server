@@ -11,21 +11,22 @@ class Parser:
     self.cache_dir = cache_dir
     self.logger = logger
 
-  def process_input(self, data: bytes) -> CommandPacket:
+  def input(self, data: bytes) -> CommandPacket:
     try:
       headers, json_data = data.decode('utf-8').split('\r\n\r\n', 1)
       self.logger.debug(f'[DEBUG] HTTP Headers: {headers}')
       json_obj = json.loads(json_data)
       self.logger.debug(f'[DEBUG] JSON Data: {json_obj}')
       return CommandPacket(json_obj)
+    
     except (json.JSONDecodeError, ValueError) as e:
       self.logger.error(f'[ERROR] Invalid JSON received: {e}')
-      raise
+      return CommandPacket({'auth': {}, 'gameplay': {}})
     except Exception as e:
       self.logger.error(f'[ERROR] Unexpected error: {e}')
-      raise
+      return CommandPacket({'auth': {}, 'gameplay': {}})
 
-  def process_output(self, packet: CommandPacket) -> bytes:
+  def output(self, packet: CommandPacket) -> bytes:
     try:
       ServerGateway.evaluate(packet)
     except Exception as e:
