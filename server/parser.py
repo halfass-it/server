@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 
 from utils.logger import Logger
-from server.packet import CommandPacket
+from utils.packet import CommandPacket
+
 from server.gateway import ServerGateway
 
 

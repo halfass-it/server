@@ -5,7 +5,7 @@ import json
 import time
 import statistics
 
-PACKET = {'auth': {'token': '$TOKEN', 'username': '$USERNAME'}, 'gameplay': {'action': '$ACTION', 'data': '$DATA'}}
+PACKET = {'auth': {'token': '$TOKEN', 'username': '$USERNAME'}, 'game': {'action': '$ACTION', 'data': '$DATA'}}
 
 
 def fuzz():
@@ -17,9 +17,9 @@ def fuzz():
     message = json.dumps(PACKET)
     request = f'POST / HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: {len(message)}\r\n\r\n{message}'
     print(f'[>] {request}')
-    sock.sendall(request.encode())
+    sock.sendall(request.encode('utf-8'))
     response = sock.recv(4096)
-    print(f'[<] {response.decode()}')
+    print(f'[<] {response.decode("utf-8")}')
   finally:
     print('[-] Closing socket')
     sock.close()

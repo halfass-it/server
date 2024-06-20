@@ -5,8 +5,9 @@ import memcache
 
 from utils.filesystem import CacheDir
 from utils.logger_to_file import LoggerToFile
+from utils.packet import Packet, CommandPacket
+
 from server.parser import Parser
-from server.packet import Packet, CommandPacket
 
 
 class Server:
@@ -40,17 +41,14 @@ class Server:
         try:
           command_packet: CommandPacket = self.parser.output(packet)
         except Exception as e:
-          self.logger.error(f'[ERROR] Error handling client data, closing connection: {e}')
+          self.logger.error(f'[ERROR] Client packet is corrupted')
+          self.logger.info('[CLOSED] Error handling client data, closing connection: {e}')
           break
-        finally:
-          if not command_packet:
-            self.logger.info('[CLOSED] Client packet is corrupted')
-            break
-          downstream_data: bytes = bytes(command_packet)
-          writer.write(downstream_data)
-          await writer.drain()
-          self.logger.info(f"[DOWNSTREAM]: '{packet.data}' to {client_ip}:{client_port}")
-          break
+        downstream_data: bytes = bytes(command_packet)
+        writer.write(downstream_data)
+        await writer.drain()
+        self.logger.info(f"[DOWNSTREAM]: '{command_packet.data}' to {client_ip}:{client_port}")
+        break
     except Exception as e:
       self.logger.error(f'[ERROR] Error handling client data, closing connection\n[STACKTRACE]: {e}')
     finally:
