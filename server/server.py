@@ -47,7 +47,8 @@ class Server:
         downstream_data: bytes = bytes(command_packet)
         writer.write(downstream_data)
         await writer.drain()
-        self.logger.info(f"[DOWNSTREAM]: '{command_packet.data}' to {client_ip}:{client_port}")
+        #TODO: move this formatting to packet class
+        self.logger.info("[DOWNSTREAM]: "+ str({'auth': command_packet.auth.data, 'game': command_packet.game.data}) +" to {client_ip}:{client_port}")
         break
     except Exception as e:
       self.logger.error(f'[ERROR] Error handling client data, closing connection\n[STACKTRACE]: {e}')

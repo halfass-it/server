@@ -26,8 +26,10 @@ class AuthGateway(Gateway):
       )
       response.raise_for_status()
     except requests.RequestException as e:
-      raise requests.RequestException(f'Error: {e}')
+      # raise requests.RequestException(f'Error: {e}')
+      pass
     return auth_packet
+  
 @dataclass
 class GameGateway(Gateway):
   @staticmethod
@@ -39,7 +41,8 @@ class GameGateway(Gateway):
       )
       response.raise_for_status()
     except requests.RequestException as e:
-      raise requests.RequestException(f'Error: {e}')
+      # raise requests.RequestException(f'Error: {e}')
+      pass
     return game_packet
 
 
