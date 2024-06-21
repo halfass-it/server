@@ -22,6 +22,9 @@ class Server:
   ) -> None:
     self.cache_dir: Path = self.cache_dir if self.cache_dir else CacheDir().path
     self.logger = LoggerToFile(name='server', cache_dir=self.cache_dir)
+    import time
+
+    time.sleep(0.5)
     self.parser = Parser(logger=self.logger)
 
   async def handle_client(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
