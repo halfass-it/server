@@ -486,7 +486,7 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "utils"
-version = "0.4.4"
+version = "0.5.1"
 description = ""
 optional = false
 python-versions = ">=3.6, <4.0"
@@ -500,7 +500,7 @@ loguru = "*"
 type = "git"
 url = "https://github.com/halfass-it/utils.git"
 reference = "HEAD"
-resolved_reference = "1a831beddb9fa2b1b7cd05405f04e291b6003b5e"
+resolved_reference = "cf65214a0569664ff8128d15030b3a039056622d"
 
 [[package]]
 name = "werkzeug"
