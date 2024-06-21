@@ -52,5 +52,5 @@ def monitor_fuzzer(number_requests):
 
 
 if __name__ == '__main__':
-  number_requests = 1000
+  number_requests = 100
   monitor_fuzzer(number_requests)

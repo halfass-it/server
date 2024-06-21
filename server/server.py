@@ -11,7 +11,6 @@ from utils.logger_to_file import LoggerToFile
 from utils.packet import CommandPacket
 from server.parser import Parser
 
-MEMCACHED_SERVER = '127.0.0.1:11211'
 class Server:
     def __init__(
         self,
@@ -26,12 +25,8 @@ class Server:
         self.buffer_size: int = buffer_size
         self.timeout: int = timeout
         self.cache_dir: Path = cache_dir or CacheDir().path
-        self.mc = memcache.Client([MEMCACHED_SERVER])
         self.logger = LoggerToFile(cache_dir=self.cache_dir)
         self.parser = Parser(logger=self.logger)
-
-    def _get_cache_key(self, data: bytes) -> str:
-        return hashlib.md5(data).hexdigest()
 
     async def handle_client(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
         client_ip, client_port = writer.get_extra_info('peername')
@@ -42,24 +37,17 @@ class Server:
                 if not upstream_data:
                     self.logger.info('[CLOSED] Client closed the connection')
                     break
-                cache_key = self._get_cache_key(upstream_data)
-                cached_result = self.mc.get(cache_key)
-                if cached_result:
-                    self.logger.info(f"[CACHE HIT] Using cached result for {client_ip}:{client_port}")
-                    command_packet = pickle.loads(cached_result)
-                else:
-                    try:
-                        packet: CommandPacket = self.parser.input(upstream_data)
-                        self.logger.info(f"[UPSTREAM]: '{packet.data}' from {client_ip}:{client_port}")
-                        command_packet: CommandPacket = self.parser.output(packet)
-                        self.mc.set(cache_key, pickle.dumps(command_packet), time=300)
-                    except Exception as e:
-                        self.logger.error(f'[ERROR] Error processing client data: {e}')
-                        break
-                downstream_data: bytes = bytes(command_packet)
+                in_packet: CommandPacket = self.parser.input(upstream_data)
+                try:
+                    self.logger.info(f"[UPSTREAM]: '{in_packet.data}' from {client_ip}:{client_port}")
+                    out_packet: CommandPacket = self.parser.output(in_packet)
+                    downstream_data: bytes = bytes(out_packet)
+                except Exception as e:
+                    self.logger.error(f'[ERROR] Error processing client data: {e}')
+                    break
                 writer.write(downstream_data)
                 await writer.drain()
-                self.logger.info(f'[DOWNSTREAM]: {command_packet.data} to {client_ip}:{client_port}')
+                self.logger.info(f'[DOWNSTREAM]: {out_packet.data} to {client_ip}:{client_port}')
                 break
         except asyncio.TimeoutError:
             self.logger.error(f'[ERROR] Connection timeout for {client_ip}:{client_port}')
