@@ -24,7 +24,15 @@ def fuzz():
   wrapped_sock.connect(server_address)
   try:
     message = json.dumps(PACKET)
-    request = f'POST / HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: {len(message)}\r\n\r\n{message}'
+    request = (
+      f'POST / HTTP/1.1\r\n'
+      f'Host: localhost\r\n'
+      f'Content-Type: application/json\r\n'
+      f'Content-Length: {len(message)}\r\n'
+      f'User-Agent: HALFASS\r\n'  # Adding User-Agent header
+      f'\r\n'
+      f'{message}'
+    )
     print(f'[>] {request}')
     wrapped_sock.sendall(request.encode())
     response = wrapped_sock.recv(4096)
