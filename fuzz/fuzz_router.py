@@ -12,6 +12,7 @@ PACKET = {
   'GAME': {'action': '$ACTION', 'data': '$DATA'},
 }
 
+
 def fuzz():
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   context = ssl.create_default_context()
