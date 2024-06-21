@@ -7,7 +7,10 @@ import time
 import statistics
 
 
-PACKET = {'auth': {'token': '$TOKEN', 'username': '$USERNAME'}, 'game': {'action': '$ACTION', 'data': '$DATA'}}
+PACKET = {
+  'auth': {'token': '$TOKEN', 'username': '$USERNAME'},
+  'game': {'action': '$ACTION', 'data': '$DATA'},
+}
 
 
 def fuzz():
