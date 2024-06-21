@@ -40,7 +40,7 @@ case "$1" in
         sudo cp ./router/nginx.conf "$NGINX_CONFIG_DIR/nginx.conf"
         sudo cp ./router/default.conf "$NGINX_SITE_DIR/default.conf"
         sudo ln -sf "$NGINX_SITE_DIR/default.conf" "$NGINX_SITE_ENABLED_DIR/default.conf"
-        sudo systemctl start nginx || sudo systemctl restart nginx
+        sudo systemctl restart nginx || sudo systemctl start nginx
         ;;
     *)
         echo "Usage: $0 {server|router}"

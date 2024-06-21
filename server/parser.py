@@ -13,6 +13,7 @@ class Parser:
   def input(self, data: bytes) -> CommandPacket:
     try:
       headers, json_data = data.decode('utf-8').split('\r\n\r\n', 1)
+      self.logger.error(f'{json_data}')
       self.logger.debug(f'[DEBUG] HTTP Headers: {", ".join(headers.splitlines())}')
       json_obj = json.loads(json_data)
       self.logger.debug(f'[DEBUG] JSON Data: {json_obj}')
