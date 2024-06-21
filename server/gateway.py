@@ -1,5 +1,8 @@
 from dataclasses import dataclass
+from typing import Dict, Any
+
 import requests
+from requests.exceptions import RequestException
 
 from utils.packet import Packet, AuthPacket, CommandPacket, GamePacket
 from utils.logger import Logger
@@ -7,47 +10,70 @@ from utils.logger import Logger
 
 @dataclass
 class Gateway:
+  AUTH_SERVER: str = 'localhost:6000'
+  GAME_SERVER: str = 'localhost:7000'
+  HTTP_AUTH_SERVER: str = f'http://{AUTH_SERVER}'
+  HTTP_GAME_SERVER: str = f'http://{GAME_SERVER}'
+
   @staticmethod
-  def evaluate(packet: Packet):
+  def proxy(packet: Packet) -> Packet:
     return packet
+
+  @staticmethod
+  def proxy_http(url: str, method: str, packet: Packet, logger: Logger) -> Packet:
+    try:
+      if method == 'GET':
+        res = requests.get(url, json=packet.data)
+      elif method == 'POST':
+        res = requests.post(url, json=packet.data)
+      else:
+        logger.error(f'[ERROR] Unsupported HTTP method: {method}')
+        return Gateway.proxy(Packet({}))
+      return Gateway.proxy(Packet(res.json()))
+    except RequestException as e:
+      logger.error(f'[ERROR] Gateway request exception: {e}')
+      return Gateway.proxy(Packet({}))
+    except Exception as e:
+      logger.error(f'[ERROR] Gateway exception: {e}')
+      return Gateway.proxy(Packet({}))
 
 
 @dataclass
 class AuthGateway(Gateway):
   @staticmethod
-  def evaluate(auth_packet: AuthPacket, logger: Logger) -> AuthPacket:
+  def proxy(auth_packet: AuthPacket, logger: Logger) -> AuthPacket:
     try:
-      res = requests.post('http://localhost:6000/', json=auth_packet.data)
-    except requests.RequestException as e:
-      logger.error(f'[ERROR] AuthGateway requests exception: {e}')
-      return auth_packet
+      packet: Packet = Packet(auth_packet.data)
+      res_packet: Packet = Gateway.proxy_http(Gateway.HTTP_AUTH_SERVER, 'POST', packet, logger)
+      return AuthPacket(res_packet.data)
     except Exception as e:
       logger.error(f'[ERROR] AuthGateway exception: {e}')
-      return auth_packet
-    return res.json()
+      return AuthPacket({})
 
 
 @dataclass
 class GameGateway(Gateway):
   @staticmethod
-  def evaluate(game_packet: GamePacket, logger: Logger) -> GamePacket:
+  def proxy(game_packet: GamePacket, logger: Logger) -> GamePacket:
     try:
-      res = requests.post('http://localhost:7000/', json=game_packet.data)
-    except requests.RequestException as e:
-      logger.error(f'[ERROR] GameGateway requests exception: {e}')
-      return game_packet
+      packet = Packet(game_packet.data)
+      res_packet: Packet = Gateway.proxy_http(Gateway.HTTP_GAME_SERVER, 'POST', packet, logger)
+      return GamePacket(res_packet.data)
     except Exception as e:
       logger.error(f'[ERROR] GameGateway exception: {e}')
-      return game_packet
-    return res.json()
+      return GamePacket({})
 
 
 @dataclass
 class ServerGateway(Gateway):
-  def evaluate(command_packet: CommandPacket) -> CommandPacket:
-    game_packet: GamePacket = GamePacket(command_packet.game)
-    auth_packet: AuthPacket = AuthPacket(command_packet.auth)
-    return CommandPacket({
-      'auth': AuthGateway.evaluate(auth_packet),
-      'game': GameGateway.evaluate(game_packet),
-    })
+  def forward(self, command_packet: CommandPacket, logger: Logger) -> CommandPacket:
+    try:
+      auth_res_packet: AuthPacket = AuthGateway.proxy(AuthPacket(command_packet.auth), logger)
+      game_res_packet: GamePacket = GameGateway.proxy(GamePacket(command_packet.game), logger)
+      return CommandPacket({'AUTH': auth_res_packet.data, 'GAME': game_res_packet.data})
+    except AttributeError as e:
+      logger.error(f'[ERROR] AttributeError in ServerGateway: {e}')
+      return CommandPacket({})
+    except Exception as e:
+      logger.error(f'[ERROR] Unexpected error in ServerGateway: {e}')
+      return CommandPacket({})

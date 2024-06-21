@@ -6,8 +6,8 @@ import time
 import statistics
 
 PACKET = {
-  'auth': {'token': '$TOKEN', 'username': '$USERNAME'},
-  'game': {'action': '$ACTION', 'data': '$DATA'},
+  'AUTH': {'TOKEN': '$TOKEN', 'USERNAME': '$USERNAME'},
+  'GAME': {'ACTION': '$ACTION', 'DATA': '$DATA'},
 }
 
 
