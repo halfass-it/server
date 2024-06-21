@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Optional
+from dataclasses import dataclass
 import asyncio
 
 from utils.filesystem import CacheDir
@@ -8,20 +9,18 @@ from utils.packet import CommandPacket
 from server.parser import Parser
 
 
+@dataclass
 class Server:
-  def __init__(
+  ip: str
+  port: int
+  buffer_size: int
+  timeout: int
+  cache_dir: Optional[Path] = None
+
+  def __post_init__(
     self,
-    ip: str,
-    port: int,
-    buffer_size: int,
-    timeout: int,
-    cache_dir: Optional[Path] = None,
   ) -> None:
-    self.ip: str = ip
-    self.port: int = port
-    self.buffer_size: int = buffer_size
-    self.timeout: int = timeout
-    self.cache_dir: Path = cache_dir or CacheDir().path
+    self.cache_dir: Path = self.cache_dir if not self.cache_dir else CacheDir().path
     self.logger = LoggerToFile(cache_dir=self.cache_dir)
     self.parser = Parser(logger=self.logger)
 

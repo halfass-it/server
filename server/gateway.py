@@ -65,7 +65,8 @@ class GameGateway(Gateway):
 
 @dataclass
 class ServerGateway(Gateway):
-  def forward(self, command_packet: CommandPacket, logger: Logger) -> CommandPacket:
+  @staticmethod
+  def forward(command_packet: CommandPacket, logger: Logger) -> CommandPacket:
     try:
       auth_res_packet: AuthPacket = AuthGateway.proxy(AuthPacket(command_packet.auth), logger)
       game_res_packet: GamePacket = GameGateway.proxy(GamePacket(command_packet.game), logger)

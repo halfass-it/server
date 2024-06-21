@@ -26,8 +26,7 @@ class Parser:
 
   def output(self, packet: CommandPacket) -> CommandPacket:
     try:
-      server_gateway: ServerGateway = ServerGateway()
-      res_packet: CommandPacket = server_gateway.forward(packet, self.logger)
+      res_packet: CommandPacket = ServerGateway.forward(packet, self.logger)
       return res_packet
     except Exception as e:
       self.logger.error(f'[ERROR] Parsing error in output: {e}')
