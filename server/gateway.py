@@ -26,14 +26,14 @@ class Gateway:
       elif method == 'POST':
         res = requests.post(url, json=packet.data)
       else:
-        logger.error(f'[ERROR] Unsupported HTTP method: {method}')
+        logger.debug(f'[GATEWAY] Unsupported HTTP method: {method}')
         return Gateway.proxy(Packet({}))
       return Gateway.proxy(Packet(res.json()))
     except RequestException as e:
-      logger.error(f'[ERROR] Gateway request exception: {e}')
+      logger.debug(f'[GATEWAY] Gateway request exception: {e}')
       return Gateway.proxy(Packet({}))
     except Exception as e:
-      logger.error(f'[ERROR] Gateway exception: {e}')
+      logger.debug(f'[GATEWAY]  Gateway exception: {e}')
       return Gateway.proxy(Packet({}))
 
 
@@ -46,7 +46,7 @@ class AuthGateway(Gateway):
       res_packet: Packet = Gateway.proxy_http(Gateway.HTTP_AUTH_SERVER, 'POST', packet, logger)
       return AuthPacket(res_packet.data)
     except Exception as e:
-      logger.error(f'[ERROR] AuthGateway exception: {e}')
+      logger.debug(f'[GATEWAY] AuthGateway exception: {e}')
       return AuthPacket({})
 
 
@@ -59,7 +59,7 @@ class GameGateway(Gateway):
       res_packet: Packet = Gateway.proxy_http(Gateway.HTTP_GAME_SERVER, 'POST', packet, logger)
       return GamePacket(res_packet.data)
     except Exception as e:
-      logger.error(f'[ERROR] GameGateway exception: {e}')
+      logger.debug(f'[GATEWAY] GameGateway exception: {e}')
       return GamePacket({})
 
 
@@ -72,8 +72,8 @@ class ServerGateway(Gateway):
       game_res_packet: GamePacket = GameGateway.proxy(GamePacket(command_packet.game), logger)
       return CommandPacket({'AUTH': auth_res_packet.data, 'GAME': game_res_packet.data})
     except AttributeError as e:
-      logger.error(f'[ERROR] AttributeError in ServerGateway: {e}')
+      logger.debug(f'[GATEWAY] AttributeError in ServerGateway: {e}')
       return CommandPacket({})
     except Exception as e:
-      logger.error(f'[ERROR] Unexpected error in ServerGateway: {e}')
+      logger.debug(f'[GATEWAY] Unexpected error in ServerGateway: {e}')
       return CommandPacket({})
