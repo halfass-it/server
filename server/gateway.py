@@ -21,7 +21,7 @@ class AuthGateway(Gateway):
   def evaluate(auth_packet: AuthPacket) -> AuthPacket:
     try:
       response = requests.post(
-        'http://localhost:6000/game',
+        'http://localhost:6000/',
         json=auth_packet.data
       )
       response.raise_for_status()
@@ -36,7 +36,7 @@ class GameGateway(Gateway):
   def evaluate(game_packet: GamePacket) -> GamePacket:
     try:
       response = requests.post(
-        'http://localhost:7000/game',
+        'http://localhost:7000/',
         json=game_packet.data
       )
       response.raise_for_status()
