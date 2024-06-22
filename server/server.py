@@ -1,12 +1,11 @@
 from pathlib import Path
-from typing import Optional
 from dataclasses import dataclass
 import asyncio
 
 from utils.filesystem import CacheDir
 from utils.logger_to_file import LoggerToFile
 from utils.packet import CommandPacket
-from server.parser import Parser
+from .parser import Parser
 
 
 @dataclass
@@ -15,16 +14,15 @@ class Server:
   port: int
   buffer_size: int
   timeout: int
-  cache_dir: Optional[Path] = None
+  cache_dir: Path = None
 
   def __post_init__(
     self,
   ) -> None:
     self.cache_dir: Path = self.cache_dir if self.cache_dir else CacheDir().path
     self.logger = LoggerToFile(name='server', cache_dir=self.cache_dir)
-    import time
-
-    time.sleep(0.5)
+    # import time
+    # time.sleep(0.5)
     self.parser = Parser(logger=self.logger)
 
   async def handle_client(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):

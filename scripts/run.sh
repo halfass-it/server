@@ -23,19 +23,18 @@ run_main() {
     $POETRY run main "$host" "$port" "$workers" "$timeout" "$cache_dir" run
 }
 
-memcached -l 127.0.0.1 -p 11211 -m 64 -d
 case "$1" in
     server)
-        run_main "127.0.0.1" "1337" "1024" "60" "$CACHE"
+        run_main "127.0.0.1" "5000" "1024" "60" "$CACHE"
         ;;
     router)
-        run_main "127.0.0.1" "1337" "1024" "60" "$CACHE" &>/dev/null &
+        run_main "127.0.0.1" "5001" "1024" "60" "$CACHE" &>/dev/null &
         sleep 1
-        run_main "127.0.0.1" "1338" "1024" "60" "$CACHE" &>/dev/null &
+        run_main "127.0.0.1" "5002" "1024" "60" "$CACHE" &>/dev/null &
         sleep 1
-        run_main "127.0.0.1" "1339" "1024" "60" "$CACHE" &>/dev/null &
+        run_main "127.0.0.1" "5003" "1024" "60" "$CACHE" &>/dev/null &
         sleep 1
-        run_main "127.0.0.1" "1340" "1024" "60" "$CACHE" &>/dev/null &
+        run_main "127.0.0.1" "5004" "1024" "60" "$CACHE" &>/dev/null &
 
         sudo cp ./router/nginx.conf "$NGINX_CONFIG_DIR/nginx.conf"
         sudo cp ./router/default.conf "$NGINX_SITE_DIR/default.conf"
