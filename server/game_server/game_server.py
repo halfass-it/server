@@ -2,7 +2,7 @@ from pathlib import Path
 
 from utils.filesystem import CacheDir
 from utils.logger import Logger
-from gameplay_server.game import Game
+from server.game_server.game import Game
 
 
 class GameServer:
