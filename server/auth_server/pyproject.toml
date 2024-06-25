@@ -1,24 +1,15 @@
 [tool.poetry]
-name = "server"
-version = "4.2.0"
+name = "auth-server"
+version = "0.1.0"
 description = ""
 authors = ["rodfer0x80 <rodrigolf080@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-setuptools = "^70.0.0"
-wheel = "^0.43.0"
-flask = "^3.0.3"
-python-dotenv = "^1.0.1"
-jsonargparse = "^4.29.0"
-pylogger = {git = "https://github.com/rodfer0x80/pylogger.git"}
 utils = {git = "https://github.com/halfass-it/utils.git"}
-requests = "^2.32.3"
+
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-main = "bin.__main__:main"

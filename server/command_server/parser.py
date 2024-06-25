@@ -1,9 +1,9 @@
 import json
 from dataclasses import dataclass
 
-from utils.logger import Logger
-from utils.packet import CommandPacket
-from .gateway import ServerGateway
+from server.logger.logger import Logger
+from server.command_server.gateway import AuthGateway, GameGateway
+from server.types.ctypes import AuthPacket, GamePacket, CommandPacket
 
 
 @dataclass
@@ -20,15 +20,16 @@ class Parser:
       return CommandPacket(json_obj)
     except (json.JSONDecodeError, ValueError) as e:
       self.logger.error(f'[PARSER] Invalid JSON input: {e}')
-      return None
+      return CommandPacket({})
     except Exception as e:
       self.logger.error(f'[PARSER] Parsing error in input: {e}')
-      return None
+      return CommandPacket({})
 
   def output(self, packet: CommandPacket) -> CommandPacket:
     try:
-      res_packet: CommandPacket = ServerGateway.forward(packet, self.logger)
-      return res_packet
+      auth_res_packet: AuthPacket = AuthGateway.forward(AuthPacket(packet.auth), self.logger)
+      game_res_packet: GamePacket = GameGateway.forward(GamePacket(packet.game), self.logger)
+      return CommandPacket({'AUTH': auth_res_packet.data, 'GAME': game_res_packet.data})
     except Exception as e:
       self.logger.error(f'[PARSER] Parsing error in output: {e}')
-      return None
+      return CommandPacket({})
