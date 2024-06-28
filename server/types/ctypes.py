@@ -70,6 +70,15 @@ class AuthPacket(Packet):
   category: str = field(init=False, default='AuthPacket')
   data: auth_packet
 
+  def __post_init__(self):
+    self.update()
+
+  def update(self):
+    self.username = self.data.get('username', '')
+    self.token = self.data.get('token', '')
+    self.command = self.data.get('command', '')
+    self.status = self.data.get('status', '')
+
   def __str__(self) -> str:
     return str(self.data)
 
@@ -84,6 +93,12 @@ class AuthPacket(Packet):
 class GamePacket(Packet):
   category: str = field(init=False, default='GamePacket')
   data: game_packet
+
+  def __post_init__(self):
+    self.update()
+
+  def update(self):
+    return
 
   def __str__(self) -> str:
     return str(self.data)
@@ -101,6 +116,9 @@ class CommandPacket(Packet):
   data: command_packet
 
   def __post_init__(self):
+    self.update()
+
+  def update(self):
     self.auth_data = self.data.get('AUTH', {})
     self.game_data = self.data.get('GAME', {})
 

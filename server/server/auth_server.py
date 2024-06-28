@@ -1,12 +1,14 @@
 from pathlib import Path
 from dataclasses import dataclass
 import asyncio
+import time
 
-from utils.filesystem import CacheDir
-from utils.logger_to_file import LoggerToFile
-from utils.packet import AuthPacket
-from .parser import Parser
-from .auth import Auth
+from server.sys.filesystem import CacheDir
+from server.logger.logger_to_file import LoggerToFile
+from server.types.ctypes import AuthPacket
+
+from server.auth_server.parser import Parser
+from server.auth_server.auth import Auth
 
 
 @dataclass
@@ -20,14 +22,10 @@ class AuthServer:
   def __post_init__(
     self,
   ) -> None:
-    print('AUTH_SERVER')
-    exit(0)
     self.cache_dir: Path = self.cache_dir if self.cache_dir else CacheDir().path
     self.logger = LoggerToFile(name='auth_server', cache_dir=self.cache_dir)
-    self.auth = Auth()
     # TODO: is this required for multiprocess logging to work or is it dreadlocked by default?
-    # import time
-    # time.sleep(0.5)
+    time.sleep(0.5)
     self.parser = Parser(auth=self.auth, logger=self.logger)
 
   async def handle_client(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
