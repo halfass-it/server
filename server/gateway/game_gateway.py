@@ -11,11 +11,11 @@ class GameGateway(Gateway):
   @staticmethod
   def forward(packet: Packet | GamePacket, logger: Logger) -> Packet | GamePacket:
     try:
-      ret_packet: Packet | GamePacket = Gateway.forward(Gateway.HTTP_GAME_SERVER, 'POST', packet, logger)
-      if isinstance(ret_packet, Packet):
-        return Packet(ret_packet.data)
+      ret_packet: Packet | GamePacket = super().forward(super().HTTP_GAME_SERVER, 'POST', packet, logger)
       if isinstance(ret_packet, GamePacket):
         return GamePacket(ret_packet.data)
+      if isinstance(ret_packet, Packet):
+        return Packet({})
     except Exception as e:
-      logger.debug(f'[GAME_GATEWAY] GameGateway exception: {e}')
-      return GamePacket({})
+      logger.debug(f'[GAME_GATEWAY]: {e}')
+      return Packet({})

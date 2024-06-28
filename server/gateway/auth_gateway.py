@@ -10,12 +10,12 @@ from .gateway import Gateway
 class AuthGateway(Gateway):
   @staticmethod
   def forward(packet: Packet | AuthPacket, logger: Logger) -> Packet | AuthPacket:
-    ret_packet: Packet | AuthPacket = Gateway.forward(Gateway.HTTP_AUTH_SERVER, 'POST', packet, logger)
+    ret_packet: Packet | AuthPacket = super().forward(super().HTTP_AUTH_SERVER, 'POST', packet, logger)
     try:
-      if isinstance(ret_packet, Packet):
-        return Packet(ret_packet.data)
       if isinstance(ret_packet, AuthPacket):
         return AuthPacket(ret_packet.data)
+      if isinstance(ret_packet, Packet):
+        return Packet({})
     except Exception as e:
-      logger.debug(f'[AUTH_GATEWAY] AuthGateway exception: {e}')
-      return AuthPacket({})
+      logger.debug(f'[AUTH_GATEWAY] - {e}')
+      return Packet({})

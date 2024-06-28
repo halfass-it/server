@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 import requests
 
-from server.types.ctypes.network import Packet
 from server.logger.logger import Logger
+from server.types.ctypes.network import Packet, CommandPacket, AuthPacket, GamePacket
 
 
 @dataclass
@@ -16,23 +16,34 @@ class Gateway:
   HTTP_GAME_SERVER: str = f'http://{GAME_SERVER}'
 
   @staticmethod
-  def faux_forward(packet: Packet) -> Packet:
+  def faux_forward(
+    packet: Packet | CommandPacket | AuthPacket | GamePacket,
+  ) -> Packet | CommandPacket | AuthPacket | GamePacket:
     return packet
 
   @staticmethod
-  def forward(url: str, method: str, packet: Packet, logger: Logger) -> Packet:
+  def forward(
+    url: str, method: str, packet: Packet | CommandPacket | AuthPacket | GamePacket, logger: Logger
+  ) -> Packet | CommandPacket | AuthPacket | GamePacket:
+    if isinstance(packet, Packet):
+      return Gateway.faux_forward(Packet({}))
     try:
       if method == 'GET':
         res = requests.get(url, json=packet.data)
       elif method == 'POST':
         res = requests.post(url, json=packet.data)
       else:
-        logger.debug(f'[GATEWAY] Unsupported HTTP method: {method}')
+        logger.debug(f'[GATEWAY] - Unsupported HTTP method: {method}')
         return Gateway.faux_forward(Packet({}))
-      return Gateway.forward(Packet(res.json()))
+      if isinstance(packet, CommandPacket):
+        return CommandPacket(res.json())
+      if isinstance(packet, AuthPacket):
+        return AuthPacket(res.json())
+      if isinstance(packet, GamePacket):
+        return GamePacket(res.json())
     except requests.exceptions.RequestException as e:
-      logger.debug(f'[GATEWAY] Gateway request exception: {e}')
+      logger.debug(f'[GATEWAY] - {e}')
       return Gateway.faux_forward(Packet({}))
     except Exception as e:
-      logger.debug(f'[GATEWAY]  Gateway exception: {e}')
+      logger.debug(f'[GATEWAY] - {e}')
       return Gateway.faux_forward(Packet({}))
