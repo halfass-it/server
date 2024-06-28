@@ -64,9 +64,10 @@ class GameGateway(Gateway):
       logger.debug(f'[GATEWAY] GameGateway exception: {e}')
       return GamePacket({})
 
+
 class CommandGateway(Gateway):
   @staticmethod
-  def forward(packet: AuthPacket|GamePacket, logger: Logger) -> AuthPacket|GamePacket:
+  def forward(packet: AuthPacket | GamePacket, logger: Logger) -> AuthPacket | GamePacket:
     try:
       packet = Packet(packet.data)
       res_packet: Packet = Gateway.forward(Gateway.HTTP_COMMAND_SERVER, 'POST', packet, logger)
@@ -74,4 +75,3 @@ class CommandGateway(Gateway):
     except Exception as e:
       logger.debug(f'[GATEWAY] CommandGateway exception: {e}')
       return Gateway.faux_forward(AuthPacket({})) if 'AUTH' in packet.data else Gateway.faux_forward(GamePacket({}))
-    

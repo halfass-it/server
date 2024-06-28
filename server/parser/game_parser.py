@@ -32,7 +32,7 @@ class Parser:
 
   def output(self, game_packet: GamePacket) -> GamePacket:
     try:
-        return game_packet
+      return game_packet
     except Exception as e:
       self.logger.error(f'[PARSER] Parsing error in output: {e}')
       return GamePacket({})

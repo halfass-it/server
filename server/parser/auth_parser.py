@@ -38,13 +38,13 @@ class Parser:
       command: str = self.filter(auth_packet.data['command'])
       if command == 'register':
         if self.auth.register(username, token, self.logger):
-          return AuthPacket({ 'username': username, 'status': 'success'})
+          return AuthPacket({'username': username, 'status': 'success'})
       elif command == 'login':
         if self.auth.login(username, token, self.logger):
-          return AuthPacket({ 'username': username, 'status': 'success'})
+          return AuthPacket({'username': username, 'status': 'success'})
       else:
         self.logger.error(f'[PARSER] Invalid command: {command}')
-      return AuthPacket({ 'username': username, 'status': 'failure'})
+      return AuthPacket({'username': username, 'status': 'failure'})
     except Exception as e:
       self.logger.error(f'[PARSER] Parsing error in output: {e}')
-      return AuthPacket({ 'username': username, 'status': 'failure'})
+      return AuthPacket({'username': username, 'status': 'failure'})

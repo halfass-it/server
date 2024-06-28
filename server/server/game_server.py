@@ -9,6 +9,7 @@ from server.types.ctypes import GamePacket
 from server.game_server.parser import Parser
 from server.game_server.game import Game
 
+
 @dataclass
 class GameServer:
   ip: str
