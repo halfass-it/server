@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from server.types.ctypes.network import Packet, AuthPacket
-from server.logger.logger import Logger
+from server.loggers.logger import Logger
 
 from .gateway import Gateway
 

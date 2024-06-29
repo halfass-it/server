@@ -1,4 +1,4 @@
-from .command_gateway import CommandGateway
+from .cmd_gateway import CmdGateway
 from .auth_gateway import AuthGateway
 from .game_gateway import GameGateway
-from .gate_parser import GateParser
+from .gateway_parser import GatewayParser
