@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 import inspect
 import traceback
 
+
 @dataclass
 class Error:
   msg: str
@@ -29,4 +30,3 @@ class Error:
 
   def __repr__(self):
     return f"Error(msg='{self.msg}', error_type='{self.error_type}')"
-

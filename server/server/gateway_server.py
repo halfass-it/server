@@ -6,6 +6,7 @@ from server.server import Server
 from server.types.ctypes import CmdPacket, AuthPacket, GamePacket
 from server.gateway import GatewayParser
 
+
 @dataclass
 class GatewayServer(Server):
   ip: str

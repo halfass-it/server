@@ -2,9 +2,7 @@ import sys
 
 from jsonargparse import CLI
 
-from server.command_server import CommandServer
-from server.auth_server import AuthServer
-from server.game_server import GameServer
+from server.gateway_server import GatewayServer
 
 
 class Main:
@@ -15,14 +13,8 @@ class Main:
     self.timeout: int = int(timeout)
     self.cache_dir: str = cache_dir
 
-  def command_server():
-    CommandServer(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir).run()
-
-  def auth_server():
-    AuthServer(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir).run()
-
-  def game_server():
-    GameServer(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir).run()
+  def run(self):
+    GatewayServer(self.ip, self.port, self.buffer_size, self.timeout, self.cache_dir).run()
 
 
 def main():

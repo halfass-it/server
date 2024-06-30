@@ -8,8 +8,8 @@ import statistics
 
 
 PACKET = {
-    'AUTH': {'username': '$USERNAME', 'token': '$AUTH_TOKEN', 'command': '$AUTH_COMMAND' },
-    'GAME': {'token': '$GAME_TOKEN', 'command': '$GAME_COMMAND'}
+  'AUTH': {'username': '$USERNAME', 'token': '$AUTH_TOKEN', 'command': '$AUTH_COMMAND'},
+  'GAME': {'token': '$GAME_TOKEN', 'command': '$GAME_COMMAND'},
 }
 
 

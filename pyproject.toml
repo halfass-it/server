@@ -21,4 +21,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-main = "bin.__main__:main"
+gateway_server = "bin.gateway_server:main"
+auth_server = "bin.auth_server:main"
+game_server = "bin.game_server:main"

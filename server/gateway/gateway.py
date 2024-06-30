@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import json
 
 import requests
 
@@ -18,14 +17,14 @@ class Gateway:
 
   @staticmethod
   def faux_forward(
-    packet: Packet | CmdPacket | AuthPacket | GamePacket,
-  ) -> Packet | CmdPacket | AuthPacket | GamePacket:
+    packet: Packet | GatewayPacket | AuthPacket | GamePacket,
+  ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
     return packet
 
   @staticmethod
   def forward(
-    url: str, method: str, packet: Packet | CmdPacket | AuthPacket | GamePacket, logger: Logger
-  ) -> Packet | CmdPacket | AuthPacket | GamePacket:
+    url: str, method: str, packet: Packet | GatewayPacket | AuthPacket | GamePacket, logger: Logger
+  ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
     if isinstance(packet, Packet):
       return Gateway.faux_forward(Packet({}))
     try:
@@ -36,8 +35,8 @@ class Gateway:
       else:
         logger.debug(f'[GATEWAY] - Unsupported HTTP method: {method}')
         return Gateway.faux_forward(Packet({}))
-      if isinstance(packet, CmdPacket):
-        return CmdPacket(res.json())
+      if isinstance(packet, GatewayPacket):
+        return GatewayPacket(res.json())
       if isinstance(packet, AuthPacket):
         return AuthPacket(res.json())
       if isinstance(packet, GamePacket):

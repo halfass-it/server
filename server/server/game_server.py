@@ -6,6 +6,7 @@ from server.server import Server
 from server.types.ctypes import GamePacket
 from server.game.game_parser import GameParser
 
+
 @dataclass
 class GameServer(Server):
   ip: str
