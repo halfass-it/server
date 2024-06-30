@@ -5,19 +5,34 @@ import json
 import time
 import statistics
 
-PACKET = {
-  'AUTH': {'TOKEN': '$TOKEN', 'USERNAME': '$USERNAME'},
-  'GAME': {'ACTION': '$ACTION', 'DATA': '$DATA'},
+AUTH_PACKET = {
+    'USERNAME': '$USERNAME',
+    'TOKEN': '$AUTH_TOKEN',
+    'COMMAND': '$AUTH_COMMAND'
 }
 
+GAME_PACKET = {
+    'TOKEN': '$GAME_TOKEN',
+    'COMMAND': '$GAME_COMMAND'
+}
 
-def fuzz():
+GATEWAY_PACKET = {
+    'AUTH': AUTH_PACKET,
+    'GAME': GAME_PACKET
+}
+
+GATEWAY_PORT = 5000
+AUTH_PORT = 6000
+GAME_PORT = 7000
+
+
+def fuzz(port, packet):
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  server_address = ('localhost', 5000)
+  server_address = ('localhost', port)
   sock.connect(server_address)
   print(f'[+] {server_address}')
   try:
-    message = json.dumps(PACKET)
+    message = json.dumps(packet)
     request = (
       f'POST / HTTP/1.1\r\n'
       f'Host: localhost\r\n'
@@ -36,11 +51,11 @@ def fuzz():
     sock.close()
 
 
-def monitor_fuzzer(number_requests):
+def monitor_fuzzer(number_requests, port, packet):
   timings = []
   for i in range(number_requests):
     start_time = time.time()
-    fuzz()
+    fuzz(port, packet)
     end_time = time.time()
     elapsed_time = end_time - start_time
     timings.append(elapsed_time)
@@ -60,5 +75,7 @@ def monitor_fuzzer(number_requests):
 
 
 if __name__ == '__main__':
-  number_requests = 100
+  number_requests = 1
+  port = GATEWAY_PORT
+  packet = GATEWAY_PACKET
   monitor_fuzzer(number_requests)
