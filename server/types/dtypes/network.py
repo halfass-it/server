@@ -9,4 +9,4 @@ auth_packet = Dict[str, str]
 
 game_packet = Dict[str, str]
 
-command_packet = Dict[packet_tag, auth_packet | game_packet]
+gateway_packet = Dict[packet_tag, auth_packet | game_packet]

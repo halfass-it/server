@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 from server.types.dtypes.packets import (
     packet,
-    command_packet,
+    gateway_packet,
     auth_packet,
     game_packet
 )
@@ -68,9 +68,9 @@ class GamePacket(Packet):
 
 
 @dataclass
-class CommandPacket(Packet):
-  category: str = field(init=False, default='CommandPacket')
-  data: command_packet
+class GatewayPacket(Packet):
+  category: str = field(init=False, default='GatewayPacket')
+  data: gateway_packet
 
   def __post_init__(self):
     self.update()

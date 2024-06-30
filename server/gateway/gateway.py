@@ -1,9 +1,10 @@
 from dataclasses import dataclass
+import json
 
 import requests
 
 from server.logger.logger import Logger
-from server.types.ctypes.network import Packet, CmdPacket, AuthPacket, GamePacket
+from server.types.ctypes.network import Packet, GatewayPacket, AuthPacket, GamePacket
 
 
 @dataclass
@@ -41,6 +42,7 @@ class Gateway:
         return AuthPacket(res.json())
       if isinstance(packet, GamePacket):
         return GamePacket(res.json())
+      return Gateway.faux_forward(Packet({}))
     except requests.exceptions.RequestException as e:
       logger.debug(f'[GATEWAY] - {e}')
       return Gateway.faux_forward(Packet({}))
