@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from server.types.dtypes.packets import packet, gateway_packet, auth_packet, game_packet
+from server.types.dtypes.network import packet, gateway_packet, auth_packet, game_packet
 
 
 @dataclass

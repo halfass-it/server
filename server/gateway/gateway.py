@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import requests
 
-from server.logger.logger import Logger
+from server.loggers.logger import Logger
 from server.types.ctypes.network import Packet, GatewayPacket, AuthPacket, GamePacket
 
 

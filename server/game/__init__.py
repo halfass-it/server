@@ -1,1 +1,1 @@
-from .game import Game
+from .game_parser import GameParser

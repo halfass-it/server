@@ -1,9 +1,9 @@
+import asyncio
 from pathlib import Path
 from dataclasses import dataclass
-import asyncio
 
-from server.server import Server
-from server.types.ctypes import GamePacket
+from server.server.server import Server
+from server.types.ctypes.network import GamePacket
 from server.game.game_parser import GameParser
 
 
@@ -20,7 +20,7 @@ class GameServer(Server):
     self,
   ) -> None:
     super().__post_init__()
-    self.game_parser = GameParser()
+    self.game_parser = GameParser(self.logger)
 
   def eval(self, upstream_packet: GamePacket) -> GamePacket:
     return upstream_packet

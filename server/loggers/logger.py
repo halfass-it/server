@@ -1,9 +1,9 @@
-from dataclasses import dataclass
 import sys
+from dataclasses import dataclass
 
 from loguru import logger
 
-from .types.types import Error
+from server.types.ctypes.error import Error
 
 
 @dataclass

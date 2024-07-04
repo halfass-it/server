@@ -2,7 +2,7 @@ import sys
 
 from jsonargparse import CLI
 
-from server.gateway_server import GatewayServer
+from server.server.gateway_server import GatewayServer
 
 
 class Main:

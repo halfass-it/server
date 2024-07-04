@@ -3,9 +3,10 @@ from dataclasses import dataclass
 
 from loguru import logger
 
-from .sys.filesystem import CacheDir
-from .types.types import Date, Error
-from .logger.logger import Logger
+from server.system.filesystem import CacheDir
+from server.types.ctypes.error import Error
+from server.types.ctypes.time import Date
+from server.loggers.logger import Logger
 
 
 @dataclass

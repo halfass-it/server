@@ -1,9 +1,9 @@
+import asyncio
 from pathlib import Path
 from dataclasses import dataclass
-import asyncio
 
-from server.server import Server
-from server.types.ctypes import AuthPacket
+from server.server.server import Server
+from server.types.ctypes.network import AuthPacket
 from server.auth.auth_parser import AuthParser
 
 
@@ -20,9 +20,10 @@ class AuthServer(Server):
     self,
   ) -> None:
     super().__post_init__()
-    self.auth_parser = AuthParser()
+    self.auth_parser = AuthParser(self.logger)
 
   def eval(self, upstream_packet: AuthPacket):
+    # TODO: Move this to AuthParser logic
     if upstream_packet.command == 'LOGIN':
       if self.auth_parser.login(upstream_packet.username, upstream_packet.token):
         return AuthPacket({
@@ -35,6 +36,7 @@ class AuthServer(Server):
           'STATUS': 'SUCCESS',
           'USERNAME': upstream_packet.username,
         })
+      # --
     return AuthPacket({})
 
   def run(self):
