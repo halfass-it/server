@@ -2,7 +2,7 @@ import sys
 
 from jsonargparse import CLI
 
-from server.auth_server import AuthServer
+from server.server.auth_server import AuthServer
 
 
 class Main:

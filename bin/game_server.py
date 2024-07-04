@@ -2,7 +2,7 @@ import sys
 
 from jsonargparse import CLI
 
-from server.game_server import GameServer
+from server.server.game_server import GameServer
 
 
 class Main:
