@@ -23,12 +23,9 @@ class Server:
     self.cache_dir: Path = self.cache_dir if self.cache_dir else CacheDir().path
     self.logger = LoggerToFile(name=self.server_class, cache_dir=self.cache_dir)
 
-  def decode(
-    self, data: bytes, packet: Packet | GatewayPacket | AuthPacket | GamePacket
-  ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
+  def decode(self, data: bytes) -> Packet | GatewayPacket | AuthPacket | GamePacket:
     try:
       headers, json_data = data.decode('utf-8').split('\r\n\r\n', 1)
-      self.logger.error(f'{json_data}')
       self.logger.debug(f'[{self.server_class.upper()}_SERVER] HTTP Headers: {", ".join(headers.splitlines())}')
       json_obj = json.loads(json_data)
       self.logger.debug(f'[{self.server_class.upper()}_SERVER] JSON Data: {json_obj}')
@@ -54,7 +51,7 @@ class Server:
   async def handle_client(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
     client_ip, client_port = writer.get_extra_info('peername')
     self.logger.info(
-      f'[{self.server_class.upper()}_SERVER] Connected from {client_ip}:{client_port} to client {self.ip}:{self.port}'
+      f'[{self.server_class.upper()}_SERVER] Connected from {self.ip}:{self.port} to client {client_ip}:{client_port}'
     )
     try:
       while True:

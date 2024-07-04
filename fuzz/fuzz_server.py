@@ -68,4 +68,4 @@ if __name__ == '__main__':
   number_requests = 1
   port = GATEWAY_PORT
   packet = GATEWAY_PACKET
-  monitor_fuzzer(number_requests)
+  monitor_fuzzer(number_requests, port, packet)

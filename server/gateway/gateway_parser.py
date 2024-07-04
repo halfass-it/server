@@ -9,19 +9,21 @@ from server.types.ctypes.network import Packet, GatewayPacket, AuthPacket, GameP
 class GatewayParser:
   logger: Logger
 
+  def __post_init__(self) -> None:
+    self.gateway = Gateway(logger=self.logger)
+
   def forward(
-    self, packet: Packet | GatewayPacket | AuthPacket | GamePacket, url: str = '', method: str = 'POST'
+    self, packet: Packet | GatewayPacket | AuthPacket | GamePacket
   ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
+    method: str = 'POST'
     try:
-      if url:
-        return Gateway.forward(url, self.method, packet.data, self.logger)
       if isinstance(packet, GatewayPacket):
-        return Gateway.forward(Gateway.HTTP_CMD_SERVER, self.method, packet.data, self.logger)
+        return self.gateway.forward(url=self.gateway.HTTP_GATEWAY_SERVER, method=method, packet=packet)
       if isinstance(packet, AuthPacket):
-        return Gateway.forward(Gateway.HTTP_AUTH_SERVER, self.method, packet.data, self.logger)
+        return self.gateway.forward(url=self.gateway.HTTP_AUTH_SERVER, method=method, packet=packet)
       if isinstance(packet, GamePacket):
-        return Gateway.forward(Gateway.HTTP_GAME_SERVER, self.method, packet.data, self.logger)
-      return Packet({})
+        return self.gateway.forward(url=self.gateway.HTTP_GAME_SERVER, method=method, packet=packet)
+      return self.gateway.faux_forward(Packet({}))
     except Exception as e:
       self.logger.error(f'[GATEWAY_PARSER] Parsing error in output: {e}')
-      return Packet({})
+      return self.gateway.faux_forward(Packet({}))
