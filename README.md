@@ -1,14 +1,23 @@
 # server
 
 ````
+= READS
+[ ] https://consteval.ca/2024/07/03/initialization/
+
+````
+
+````
 => TODO
-[x] update docs 
 [ ] fix fuzz with new updates; make it pass
+
+[ ] update docs 
+
 [ ] memcache utils
-[x] auth server connected
-[x] gameplay server connected
-[ ] multithreading server! pypeline?
-[ ] auth server
+
+[ ] mypy type checking - https://mypy.readthedocs.io/en/stable/
+
+[ ] auth server with google auth
+
 [ ] auth db
 Backup for PostgreSQL:
 For backing up your PostgreSQL database, you can use the built-in pg_dump utility or a tool like pg_backup. Here's an example of using pg_dump to create a backup:
@@ -16,6 +25,7 @@ pg_dump -U postgres -d mydatabase > backup.sql
 You can automate this process using cron jobs or a backup management tool like PostgreSQL Backup and Restore (pbr).
 /auth_server
 /gameplay_server
+
 [ ] cdn
 Content Delivery Network (CDN):
 For serving static assets through a CDN, you can use a CDN service provider like Cloudflare, Amazon CloudFront, or Fastly. These services allow you to cache and distribute your static content globally for better performance and reduced latency.
@@ -43,8 +53,7 @@ server {
 
 ````
 => Requirements
-> python>=3.12
+> python>=3.11
 > python-venv
 > nginx
-> memcached
 ````

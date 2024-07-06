@@ -36,7 +36,8 @@ case "$1" in
         ;;
     router)
         run_main "127.0.0.1" "5001" "1024" "60" "$CACHE" "gateway_server" &>/dev/null &
-        sleep 1
+        # stdout and stderr to devnull = 1>/dev/null 2>&1
+		sleep 1
         run_main "127.0.0.1" "5002" "1024" "60" "$CACHE" "gateway_server" &>/dev/null &
         sleep 1
         run_main "127.0.0.1" "5003" "1024" "60" "$CACHE" "gateway_server" &>/dev/null &

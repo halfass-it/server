@@ -25,8 +25,8 @@ class GatewayServer(Server):
   def eval(self, upstream_packet: GatewayPacket) -> GatewayPacket:
     try:
       return GatewayPacket({
-        'AUTH': self.gateway_parser.forward(AuthPacket(upstream_packet.auth)),
-        'GAME': self.gateway_parser.forward(GamePacket(upstream_packet.game)),
+        'AUTH': self.gateway_parser.forward(AuthPacket(upstream_packet.auth_data)),
+        'GAME': self.gateway_parser.forward(GamePacket(upstream_packet.game_data)),
       })
     except Exception as e:
       self.logger.debug(f'[{self.server_class.upper()}_SERVER] Eval error: {e}')
