@@ -23,7 +23,7 @@ class GatewayParser:
         return self.gateway.forward(url=self.gateway.HTTP_AUTH_SERVER, method=method, packet=packet)
       if isinstance(packet, GamePacket):
         return self.gateway.forward(url=self.gateway.HTTP_GAME_SERVER, method=method, packet=packet)
-      return self.gateway.faux_forward(Packet({}))
+      return self.gateway.faux_forward(packet)
     except Exception as e:
       self.logger.error(f'[GATEWAY_PARSER] Parsing error in output: {e}')
-      return self.gateway.faux_forward(Packet({}))
+      return self.gateway.faux_forward(packet)

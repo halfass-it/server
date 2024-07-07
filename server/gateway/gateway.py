@@ -26,7 +26,7 @@ class Gateway:
     self, url: str, method: str, packet: Packet | GatewayPacket | AuthPacket | GamePacket
   ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
     if isinstance(packet, Packet):
-      return Gateway.faux_forward(Packet({}))
+      return Gateway.faux_forward(packet)
     try:
       if method == 'GET':
         res = requests.get(url, json=packet.data)
@@ -41,10 +41,10 @@ class Gateway:
         return AuthPacket(res.json())
       if isinstance(packet, GamePacket):
         return GamePacket(res.json())
-      return Gateway.faux_forward(Packet({}))
+      return Gateway.faux_forward(packet)
     except requests.exceptions.RequestException as e:
       self.logger.debug(f'[GATEWAY] - {e}')
-      return Gateway.faux_forward(Packet({}))
+      return Gateway.faux_forward(packet)
     except Exception as e:
       self.logger.debug(f'[GATEWAY] - {e}')
-      return Gateway.faux_forward(Packet({}))
+      return Gateway.faux_forward(packet)
