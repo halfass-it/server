@@ -3,6 +3,8 @@
 ````
 = READS
 [ ] https://consteval.ca/2024/07/03/initialization/
+[ ] https://concatenative.org/wiki/view/Modal
+[ ] https://wryl.tech/projects/modal.html
 
 ````
 
