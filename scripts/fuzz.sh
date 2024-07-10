@@ -5,14 +5,20 @@ VENV=$CACHE/.venv
 PYTHON=$VENV/bin/python
 
 case "$1" in
-    server)
-        $PYTHON ./fuzz/fuzz_server.py
+    gateway)
+        $PYTHON ./fuzz/fuzz_gateway.py
+        ;;
+    auth)
+        $PYTHON ./fuzz/fuzz_auth.py
+        ;;
+    game)
+        $PYTHON ./fuzz/fuzz_game.py
         ;;
     router)
-        $PYTHON ./fuzz/fuzz_router.py
+        $PYTHON ./fuzz/fuzz_router.py 
         ;;
     *)
-        echo "Usage: $0 {server|router}"
+        echo "Usage: $0 {router|gateway|auth|game}"
         exit 1
         ;;
 esac

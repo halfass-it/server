@@ -51,6 +51,8 @@ class GamePacket(Packet):
     self.update()
 
   def update(self):
+    self.token_data = self.data.get('TOKEN', {})
+    self.command_data = self.data.get('COMMAND', {})
     return
 
   def __str__(self) -> str:

@@ -5,15 +5,15 @@ import json
 import time
 import statistics
 
+
+AUTH_PORT = 6000
 AUTH_PACKET = {'USERNAME': '$USERNAME', 'TOKEN': '$AUTH_TOKEN', 'COMMAND': '$AUTH_COMMAND'}
 
 GAME_PACKET = {'TOKEN': '$GAME_TOKEN', 'COMMAND': '$GAME_COMMAND'}
-
-GATEWAY_PACKET = {'AUTH': AUTH_PACKET, 'GAME': GAME_PACKET}
+GAME_PORT = 7000
 
 GATEWAY_PORT = 5000
-AUTH_PORT = 6000
-GAME_PORT = 7000
+GATEWAY_PACKET = {'AUTH': AUTH_PACKET, 'GAME': GAME_PACKET}
 
 
 def fuzz(port, packet):
@@ -28,7 +28,7 @@ def fuzz(port, packet):
       f'Host: localhost\r\n'
       f'Content-Type: application/json\r\n'
       f'Content-Length: {len(message)}\r\n'
-      f'User-Agent: HALFASS\r\n'  # Adding User-Agent header
+      f'User-Agent: HALFASS\r\n'  # Mandatory check for spam requests
       f'\r\n'
       f'{message}'
     )
@@ -65,7 +65,7 @@ def monitor_fuzzer(number_requests, port, packet):
 
 
 if __name__ == '__main__':
-  number_requests = 1
-  port = GATEWAY_PORT
-  packet = GATEWAY_PACKET
-  monitor_fuzzer(number_requests, port, packet)
+  BATCH_SIZE = 1
+  PORT = GAME_PORT
+  PACKET = GAME_PACKET
+  monitor_fuzzer(BATCH_SIZE, PORT, PACKET)

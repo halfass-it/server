@@ -23,7 +23,12 @@ class GameServer(Server):
     self.game_parser = GameParser(self.logger)
 
   def eval(self, upstream_packet: GamePacket) -> GamePacket:
-    return upstream_packet
+    #TODO: filter in parser
+    return GamePacket({
+      'STATUS': 'VALID',
+      'TOKEN': upstream_packet.token_data,
+      'COMMAND': upstream_packet.command_data
+      })
 
   def run(self):
     asyncio.run(super().start())
