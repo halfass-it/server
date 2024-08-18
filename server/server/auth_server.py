@@ -38,7 +38,7 @@ class AuthServer(Server):
           'USERNAME': upstream_packet.username,
         })
       # --
-    self.logger.error(f'[AUTH_SERVER] Invalid command: {upstream_packet.command}')
+    self.logger.debug(f'[AUTH_SERVER] Invalid command: {upstream_packet.command}')
     return upstream_packet
 
   def run(self):

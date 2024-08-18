@@ -32,10 +32,10 @@ class AuthPacket(Packet):
     self.update()
 
   def update(self):
-    self.username = self.data.get('username', '')
-    self.token = self.data.get('token', '')
-    self.command = self.data.get('command', '')
-    self.status = self.data.get('status', '')
+    self.username = self.data.get('USERNAME', '')
+    self.token = self.data.get('TOKEN', '')
+    self.command = self.data.get('COMMAND', '')
+    self.status = self.data.get('STATUS', '')
 
   def __str__(self) -> str:
     return str(self.data)
