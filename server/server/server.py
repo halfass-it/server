@@ -44,7 +44,8 @@ class Server:
       return Packet({})
 
   def eval(
-    self, upstream_packet: Packet | GatewayPacket | AuthPacket | GamePacket
+    self,
+    upstream_packet: Packet | GatewayPacket | AuthPacket | GamePacket,
   ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
     return upstream_packet
 
@@ -55,7 +56,10 @@ class Server:
     )
     try:
       while True:
-        upstream_data: bytes = await asyncio.wait_for(reader.read(self.buffer_size), timeout=self.timeout)
+        upstream_data: bytes = await asyncio.wait_for(
+          reader.read(self.buffer_size),
+          timeout=self.timeout,
+        )
         if not upstream_data:
           self.logger.info(f'[{self.server_class.upper()}_SERVER] Client closed the connection')
           break

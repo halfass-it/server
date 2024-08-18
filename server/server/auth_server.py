@@ -24,6 +24,7 @@ class AuthServer(Server):
 
   def eval(self, upstream_packet: AuthPacket):
     # TODO: Move this to AuthParser logic
+    # TODO: command extraction is broken, fix it (upstream_packet.command is None)
     if upstream_packet.command == 'LOGIN':
       if self.auth_parser.login(upstream_packet.username, upstream_packet.token):
         return AuthPacket({
@@ -37,7 +38,8 @@ class AuthServer(Server):
           'USERNAME': upstream_packet.username,
         })
       # --
-    return AuthPacket({})
+    self.logger.error(f'[AUTH_SERVER] Invalid command: {upstream_packet.command}')
+    return upstream_packet
 
   def run(self):
     asyncio.run(super().start())

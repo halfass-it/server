@@ -21,7 +21,12 @@ class LoggerToFile(Logger):
     except Exception as e:
       raise (Exception(f'{Error(e)}'))
     logfile = self.cache_dir / f'{self.name}_{Date().now()}.log'
-    logger.add(logfile, rotation='1 day', retention='7 days', level='DEBUG')
+    logger.add(
+      logfile,
+      rotation='1 day',
+      retention='7 days',
+      level='DEBUG',
+    )
 
   def log(self, msg):
     return self.info(Error(msg))

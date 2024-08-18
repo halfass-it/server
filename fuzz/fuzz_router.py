@@ -8,7 +8,11 @@ import statistics
 
 
 PACKET = {
-  'AUTH': {'username': '$USERNAME', 'token': '$AUTH_TOKEN', 'command': '$AUTH_COMMAND'},
+  'AUTH': {
+    'username': '$USERNAME',
+    'token': '$AUTH_TOKEN',
+    'command': '$AUTH_COMMAND',
+  },
   'GAME': {'token': '$GAME_TOKEN', 'command': '$GAME_COMMAND'},
 }
 
@@ -66,5 +70,5 @@ def monitor_fuzzer(number_requests):
 
 
 if __name__ == '__main__':
-  number_requests = 256
+  number_requests = 1
   monitor_fuzzer(number_requests)

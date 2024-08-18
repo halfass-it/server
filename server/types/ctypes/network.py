@@ -1,6 +1,11 @@
 from dataclasses import dataclass, field
 
-from server.types.dtypes.network import packet, gateway_packet, auth_packet, game_packet
+from server.types.dtypes.network import (
+  packet,
+  gateway_packet,
+  auth_packet,
+  game_packet,
+)
 
 
 @dataclass
@@ -81,7 +86,10 @@ class GatewayPacket(Packet):
     return str({'AUTH': self.auth_data, 'GAME': self.game_data})
 
   def __bytes__(self) -> bytes:
-    return str({'AUTH': self.auth_data, 'GAME': self.game_data}).encode('utf-8')
+    return str({
+      'AUTH': self.auth_data,
+      'GAME': self.game_data,
+    }).encode('utf-8')
 
   def __repr__(self) -> str:
     return f'{self.category}(AUTH={repr(self.auth_data)}, GAME={repr(self.game_data)})'

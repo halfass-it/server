@@ -3,7 +3,12 @@ from dataclasses import dataclass
 import requests
 
 from server.loggers.logger import Logger
-from server.types.ctypes.network import Packet, GatewayPacket, AuthPacket, GamePacket
+from server.types.ctypes.network import (
+  Packet,
+  GatewayPacket,
+  AuthPacket,
+  GamePacket,
+)
 
 
 @dataclass
@@ -22,7 +27,10 @@ class Gateway:
     return packet
 
   def forward(
-    self, url: str, method: str, packet: Packet | GatewayPacket | AuthPacket | GamePacket
+    self,
+    url: str,
+    method: str,
+    packet: Packet | GatewayPacket | AuthPacket | GamePacket,
   ) -> Packet | GatewayPacket | AuthPacket | GamePacket:
     try:
       if method == 'GET':

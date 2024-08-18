@@ -59,7 +59,7 @@ case "$1" in
         sudo systemctl restart nginx || sudo systemctl start nginx
         ;;
     *)
-        echo "Usage: $0 {server|router}"
+        echo "Usage: $0 {gateway|auth|game|router}"
         exit 1
         ;;
 esac
