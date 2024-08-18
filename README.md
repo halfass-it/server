@@ -5,16 +5,13 @@
 [ ] https://consteval.ca/2024/07/03/initialization/
 [ ] https://concatenative.org/wiki/view/Modal
 [ ] https://wryl.tech/projects/modal.html
+[ ] https://www.youtube.com/watch?v=0PEFkDAokRI
 
 ````
 
 ````
 => TODO
-[ ] fix fuzz with new updates; make it pass
-
-[ ] update docs 
-
-[ ] memcache utils
+[ ] fix fuzz with new updates; make it pass, router is hanging on gateway, it should forward to auth and game, then push answer back to client
 
 [ ] mypy type checking - https://mypy.readthedocs.io/en/stable/
 
@@ -27,31 +24,7 @@ pg_dump -U postgres -d mydatabase > backup.sql
 You can automate this process using cron jobs or a backup management tool like PostgreSQL Backup and Restore (pbr).
 /auth_server
 /gameplay_server
-
-[ ] cdn
-Content Delivery Network (CDN):
-For serving static assets through a CDN, you can use a CDN service provider like Cloudflare, Amazon CloudFront, or Fastly. These services allow you to cache and distribute your static content globally for better performance and reduced latency.
-Alternatively, you can self-host a CDN using a tool like Nginx, Apache Traffic Server, or Varnish Cache.
-Here's an example of configuring NGINX to serve static assets:
-server {
-    listen 80;
-    server_name example.com;
-
-    location /static/ {
-        root /path/to/static/files;
-        expires 30d;
-    }
-
-    location / {
-        proxy_pass http://backend;
-        proxy_set_header Host $host;
-    }
-}
-/router
-
-
 ````
-
 
 ````
 => Requirements
